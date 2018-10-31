@@ -29,5 +29,8 @@ namespace UserManagement.LIBRARY.RDBMModels
 
         [StringLength(50)]
         public string Position { get; set; }
+
+        [StringLength(50)]
+        public string Address { get; set; }
     }
 }
