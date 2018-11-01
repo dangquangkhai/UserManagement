@@ -36,7 +36,7 @@
         </div>
     </div>
 </header>
-<div class="outer">
+<div class="outer" id="DataTableApp">
     <div class="inner bg-container">
         <div class="card">
             <div class="card-header bg-white">
@@ -628,3 +628,23 @@
 <!--End of plugin scripts-->
 <!--Page level scripts-->
 <script type="text/javascript" src="~/Content/js/pages/users.js"></script>
+
+<script>
+    new Vue({
+        el: '#DataTableApp',
+        data: {
+            UserList:[]
+        },
+        mounted() {
+            //Get own spaces
+            axios
+                .get(API_BASE_URL + '/UserManagement/GetUser')
+                .then(response => {
+                    if (response.data.success) {
+                        console.log(response.data.content);
+                    }
+                });
+        },
+
+    })
+</script>
