@@ -9,7 +9,7 @@ namespace UserManagement.LIBRARY.RDBMProviders
 {
     public class UserProvider: RDBMBaseProvider
     {
-        public User[] getAllUser()
+        public User[] getAllUser()  
         {
             return base.db.Users.ToArray();
         }
