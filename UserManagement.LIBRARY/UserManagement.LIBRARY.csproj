@@ -82,6 +82,9 @@
     <Compile Include="RDBMModels\Role.cs" />
     <Compile Include="RDBMModels\User.cs" />
     <Compile Include="RDBMProviders\RDBMBaseProvider.cs" />
+    <Compile Include="RDBMProviders\SecureCipher.cs" />
+    <Compile Include="RDBMProviders\StringCipher.cs" />
+    <Compile Include="RDBMProviders\UserProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -93,6 +96,9 @@
     <Content Include="Scripts\jquery-1.6.4.min.js" />
     <Content Include="Scripts\jquery.signalR-2.3.0.js" />
     <Content Include="Scripts\jquery.signalR-2.3.0.min.js" />
+    <Content Include="Scripts\vue.js" />
+    <Content Include="Scripts\vue.min.js" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

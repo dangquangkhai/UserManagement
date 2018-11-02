@@ -95,7 +95,6 @@ D:\Projects\UserManagement\UserManagement.PORTAL\bin\Microsoft.AI.DependencyColl
 D:\Projects\UserManagement\UserManagement.PORTAL\bin\Microsoft.AI.WindowsServer.xml
 D:\Projects\UserManagement\UserManagement.PORTAL\bin\Microsoft.AI.Web.xml
 D:\Projects\UserManagement\UserManagement.PORTAL\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-D:\Projects\UserManagement\UserManagement.PORTAL\obj\Debug\UserManagement.PORTAL.csprojAssemblyReference.cache
 D:\Projects\UserManagement\UserManagement.PORTAL\obj\Debug\UserManagement.PORTAL.csproj.CoreCompileInputs.cache
 D:\Projects\UserManagement\UserManagement.PORTAL\obj\Debug\UserManagement.PORTAL.csproj.CopyComplete
 D:\Projects\UserManagement\UserManagement.PORTAL\obj\Debug\UserManagement.PORTAL.dll

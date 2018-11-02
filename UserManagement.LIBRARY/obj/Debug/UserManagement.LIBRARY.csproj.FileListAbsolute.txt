@@ -18,8 +18,8 @@ D:\Projects\UserManagement\UserManagement.LIBRARY\bin\Debug\Microsoft.Owin.xml
 D:\Projects\UserManagement\UserManagement.LIBRARY\bin\Debug\Microsoft.Owin.Host.SystemWeb.xml
 D:\Projects\UserManagement\UserManagement.LIBRARY\bin\Debug\Microsoft.Owin.Security.xml
 D:\Projects\UserManagement\UserManagement.LIBRARY\bin\Debug\Newtonsoft.Json.xml
-D:\Projects\UserManagement\UserManagement.LIBRARY\obj\Debug\UserManagement.LIBRARY.csprojAssemblyReference.cache
 D:\Projects\UserManagement\UserManagement.LIBRARY\obj\Debug\UserManagement.LIBRARY.csproj.CoreCompileInputs.cache
 D:\Projects\UserManagement\UserManagement.LIBRARY\obj\Debug\UserManagement.LIBRARY.csproj.CopyComplete
 D:\Projects\UserManagement\UserManagement.LIBRARY\obj\Debug\UserManagement.LIBRARY.dll
 D:\Projects\UserManagement\UserManagement.LIBRARY\obj\Debug\UserManagement.LIBRARY.pdb
+D:\Projects\UserManagement\UserManagement.LIBRARY\obj\Debug\UserManagement.LIBRARY.csprojAssemblyReference.cache

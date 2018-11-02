@@ -19,6 +19,9 @@ namespace UserManagement.LIBRARY.RDBMModels
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>()
+                .Property(e => e.Password)
+                .IsUnicode(false);
+            modelBuilder.Entity<User>()
                 .Property(e => e.Phone)
                 .IsFixedLength();
             modelBuilder.Entity<User>()

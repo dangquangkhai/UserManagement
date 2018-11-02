@@ -105,3 +105,5 @@ D:\Projects\UserManagement\UserManagement.ADMIN\obj\Debug\UserManagement.ADMIN.c
 D:\Projects\UserManagement\UserManagement.ADMIN\obj\Debug\UserManagement.ADMIN.csproj.CopyComplete
 D:\Projects\UserManagement\UserManagement.ADMIN\obj\Debug\UserManagement.ADMIN.dll
 D:\Projects\UserManagement\UserManagement.ADMIN\obj\Debug\UserManagement.ADMIN.pdb
+D:\Projects\UserManagement\UserManagement.ADMIN\bin\EntityFramework.SqlServer.dll
+D:\Projects\UserManagement\UserManagement.ADMIN\bin\EntityFramework.SqlServer.xml
