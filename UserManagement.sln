@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserManagement.PORTAL", "Us
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserManagement.PERMISSON", "UserManagement.PERMISSON\UserManagement.PERMISSON.csproj", "{4BD64194-1B4E-4485-A208-DC530EB26114}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserManagement.TEST", "UserManagement.TEST\UserManagement.TEST.csproj", "{0DCAB8D8-D635-4715-BE31-32FB8499CF47}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{4BD64194-1B4E-4485-A208-DC530EB26114}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4BD64194-1B4E-4485-A208-DC530EB26114}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4BD64194-1B4E-4485-A208-DC530EB26114}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DCAB8D8-D635-4715-BE31-32FB8499CF47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DCAB8D8-D635-4715-BE31-32FB8499CF47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DCAB8D8-D635-4715-BE31-32FB8499CF47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DCAB8D8-D635-4715-BE31-32FB8499CF47}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
