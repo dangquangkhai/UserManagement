@@ -68,6 +68,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -85,6 +86,8 @@
     <Compile Include="RDBMProviders\SecureCipher.cs" />
     <Compile Include="RDBMProviders\StringCipher.cs" />
     <Compile Include="RDBMProviders\UserProvider.cs" />
+    <Compile Include="ReflectionHelper.cs" />
+    <Compile Include="SessionHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

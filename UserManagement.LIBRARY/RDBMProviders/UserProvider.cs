@@ -30,6 +30,11 @@ namespace UserManagement.LIBRARY.RDBMProviders
             }
         }
 
+        public User getUserByEmail(String Email)
+        {
+            return base.db.Users.Where(u => u.Email == Email).FirstOrDefault();
+        }
+
 
         public User getUserById(int ID)
         {
