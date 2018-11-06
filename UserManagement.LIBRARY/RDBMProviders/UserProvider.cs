@@ -83,5 +83,11 @@ namespace UserManagement.LIBRARY.RDBMProviders
 
         }
 
+
+        public List<User> GetAllListUser()
+        {
+            return base.db.Users.ToList();
+        }
+
     }
 }

@@ -99,3 +99,11 @@ D:\Projects\UserManagement\UserManagement.PORTAL\obj\Debug\UserManagement.PORTAL
 D:\Projects\UserManagement\UserManagement.PORTAL\obj\Debug\UserManagement.PORTAL.csproj.CopyComplete
 D:\Projects\UserManagement\UserManagement.PORTAL\obj\Debug\UserManagement.PORTAL.dll
 D:\Projects\UserManagement\UserManagement.PORTAL\obj\Debug\UserManagement.PORTAL.pdb
+D:\Projects\UserManagement\UserManagement.PORTAL\bin\UserManagement.LIBRARY.dll
+D:\Projects\UserManagement\UserManagement.PORTAL\bin\EntityFramework.dll
+D:\Projects\UserManagement\UserManagement.PORTAL\bin\UserManagement.LIBRARY.pdb
+D:\Projects\UserManagement\UserManagement.PORTAL\bin\UserManagement.LIBRARY.dll.config
+D:\Projects\UserManagement\UserManagement.PORTAL\bin\EntityFramework.xml
+D:\Projects\UserManagement\UserManagement.PORTAL\obj\Debug\UserManagement.PORTAL.csprojAssemblyReference.cache
+D:\Projects\UserManagement\UserManagement.PORTAL\bin\EntityFramework.SqlServer.dll
+D:\Projects\UserManagement\UserManagement.PORTAL\bin\EntityFramework.SqlServer.xml
