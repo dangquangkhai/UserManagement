@@ -12,11 +12,16 @@
 <script type="text/javascript" src="~/Content/vendors/cropper/js/cropper.min.js"></script>
 @*<script type="text/javascript" src="~/Content/js/pages/cropper.js"></script>*@
 
+@* Date picker *@
+<link type="text/css" rel="stylesheet" href="~/Content/vendors/datepicker/css/bootstrap-datepicker.min.css" />
+<script type="text/javascript" src="~/Content/vendors/datepicker/js/bootstrap-datepicker.min.js"></script>
+
 <style>
     img#image {
-        max-width:900px;
-        max-height:350px;
+        max-width: 900px;
+        max-height: 350px;
     }
+
     label.btn.btn-primary.btn-upload, button.reset {
         height: 36px;
         margin-bottom: 5px;
@@ -225,6 +230,21 @@
                         <div class="form-group row">
                             <div class="col-lg-3 text-lg-right">
                                 <label for="phone" class="col-form-label">
+                                    Ngày Sinh
+                                </label>
+                            </div>
+                            <div class="col-xl-6 col-lg-8">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-fw  fa-user text-primary"></i></span>
+                                    <input type="text" placeholder=" " id="inputBirthday" name="inputBirthday" data-date-format="mm/dd/yyyy" v-model="User.Birthday"
+                                           class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-lg-3 text-lg-right">
+                                <label for="phone" class="col-form-label">
                                     Số Điện Thoại
                                 </label>
                             </div>
@@ -237,26 +257,26 @@
                             </div>
                         </div>
                         @*<div class="form-group gender_message row">
-            <div class="col-lg-3 text-lg-right">
-                <label class="col-form-label">Gender *</label>
-            </div>
-            <div class="col-xl-6 col-lg-8">
-                <div class="custom-controls-stacked">
-                    <label class="custom-control custom-radio">
-                        <input id="radio1" type="radio" name="gender"
-                               class="custom-control-input">
-                        <span class="custom-control-indicator"></span>
-                        <span class="custom-control-description">Male</span>
-                    </label>
-                    <label class="custom-control custom-radio">
-                        <input id="radio2" type="radio" name="gender"
-                               class="custom-control-input">
-                        <span class="custom-control-indicator"></span>
-                        <span class="custom-control-description">Female</span>
-                    </label>
-                </div>
-            </div>
-        </div>*@
+                                <div class="col-lg-3 text-lg-right">
+                                    <label class="col-form-label">Gender *</label>
+                                </div>
+                                <div class="col-xl-6 col-lg-8">
+                                    <div class="custom-controls-stacked">
+                                        <label class="custom-control custom-radio">
+                                            <input id="radio1" type="radio" name="gender"
+                                                   class="custom-control-input">
+                                            <span class="custom-control-indicator"></span>
+                                            <span class="custom-control-description">Male</span>
+                                        </label>
+                                        <label class="custom-control custom-radio">
+                                            <input id="radio2" type="radio" name="gender"
+                                                   class="custom-control-input">
+                                            <span class="custom-control-indicator"></span>
+                                            <span class="custom-control-description">Female</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>*@
                         <div class="form-group row">
                             <div class="col-lg-3 text-lg-right">
                                 <label for="address" class="col-form-label">
@@ -271,47 +291,47 @@
                             </div>
                         </div>
                         @*<div class="form-group row">
-            <div class="col-lg-3 text-lg-right">
-                <label for="city" class="col-form-label">
-                    City
-                    *
-                </label>
-            </div>
-            <div class="col-xl-6 col-lg-8">
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-fw fa-plus text-primary"></i></span>
-                    <input type="text" placeholder=" " name="city" id="city"
-                           class="form-control">
-                </div>
-            </div>
-        </div>*@
+                                <div class="col-lg-3 text-lg-right">
+                                    <label for="city" class="col-form-label">
+                                        City
+                                        *
+                                    </label>
+                                </div>
+                                <div class="col-xl-6 col-lg-8">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-fw fa-plus text-primary"></i></span>
+                                        <input type="text" placeholder=" " name="city" id="city"
+                                               class="form-control">
+                                    </div>
+                                </div>
+                            </div>*@
                         @*<div class="form-group row">
-            <div class="col-lg-3 text-lg-right">
-                <label for="pincode" class="col-form-label">
-                    Pincode
-                    *
-                </label>
-            </div>
-            <div class="col-xl-6 col-lg-8">
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-fw fa-plus text-primary"></i></span>
-                    <input type="text" placeholder=" " name="pincode" id="pincode"
-                           class="form-control">
-                </div>
-            </div>
-        </div>*@
+                                <div class="col-lg-3 text-lg-right">
+                                    <label for="pincode" class="col-form-label">
+                                        Pincode
+                                        *
+                                    </label>
+                                </div>
+                                <div class="col-xl-6 col-lg-8">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-fw fa-plus text-primary"></i></span>
+                                        <input type="text" placeholder=" " name="pincode" id="pincode"
+                                               class="form-control">
+                                    </div>
+                                </div>
+                            </div>*@
                         @*<div class="form-group row">
-            <div class="col-xl-6 col-lg-8 add_user_checkbox_error push-lg-3">
-                <div>
-                    <label class="custom-control custom-checkbox">
-                        <input id="checkbox1" type="checkbox" name="check_active"
-                               class="custom-control-input">
-                        <span class="custom-control-indicator"></span>
-                        <span class="custom-control-description">Activate your account</span>
-                    </label>
-                </div>
-            </div>
-        </div>*@
+                                <div class="col-xl-6 col-lg-8 add_user_checkbox_error push-lg-3">
+                                    <div>
+                                        <label class="custom-control custom-checkbox">
+                                            <input id="checkbox1" type="checkbox" name="check_active"
+                                                   class="custom-control-input">
+                                            <span class="custom-control-indicator"></span>
+                                            <span class="custom-control-description">Activate your account</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>*@
                         <div class="form-group row">
                             <div class="col-lg-9 push-lg-3">
                                 <button class="btn btn-primary" v-on:click="EditUser()">
@@ -336,6 +356,12 @@
 <script type="text/javascript" src="~/Content/vendors/holderjs/js/holder.js"></script>
 <script type="text/javascript" src="~/Content/vendors/bootstrapvalidator/js/bootstrapValidator.min.js"></script>
 @*<script type="text/javascript" src="~/Content/js/pages/validation.js"></script>*@
+<script type="text/javascript" src="~/Content/vendors/moment/js/moment.min.js"></script>
+<script>
+    function formatDate(date) {
+        return moment(date).format("DD/MM/YYYY");
+    }
+</script>
 <script>
     new Vue({
         el: '#tryitForm',
@@ -343,6 +369,7 @@
             User: []
         },
         updated() {
+            var vueVM = this;
             $(document).ready(function () {
 
                 var console = window.console || { log: function () { } };
@@ -369,30 +396,30 @@
                     }
                 };
 
-                //// Cropper
-                //$image.on({
-                //    'build.cropper': function (e) {
-                //        console.log(e.type);
-                //    },
-                //    'built.cropper': function (e) {
-                //        console.log(e.type);
-                //    },
-                //    'cropstart.cropper': function (e) {
-                //        console.log(e.type, e.action);
-                //    },
-                //    'cropmove.cropper': function (e) {
-                //        console.log(e.type, e.action);
-                //    },
-                //    'cropend.cropper': function (e) {
-                //        console.log(e.type, e.action);
-                //    },
-                //    'crop.cropper': function (e) {
-                //        console.log(e.type, e.x, e.y, e.width, e.height, e.rotate, e.scaleX, e.scaleY);
-                //    },
-                //    'zoom.cropper': function (e) {
-                //        console.log(e.type, e.ratio);
-                //    }
-                //}).cropper(options);
+                // Cropper
+                $image.on({
+                    'build.cropper': function (e) {
+                        //console.log(e.type);
+                    },
+                    'built.cropper': function (e) {
+                        //console.log(e.type);
+                    },
+                    'cropstart.cropper': function (e) {
+                        //console.log(e.type, e.action);
+                    },
+                    'cropmove.cropper': function (e) {
+                        //console.log(e.type, e.action);
+                    },
+                    'cropend.cropper': function (e) {
+                        //console.log(e.type, e.action);
+                    },
+                    'crop.cropper': function (e) {
+                        //console.log(e.type, e.x, e.y, e.width, e.height, e.rotate, e.scaleX, e.scaleY);
+                    },
+                    'zoom.cropper': function (e) {
+                        //console.log(e.type, e.ratio);
+                    }
+                }).cropper(options);
 
 
                 // Buttons
@@ -549,6 +576,18 @@
 
             });
 
+            $(document).ready(function () {
+                $('#inputBirthday').datepicker({
+                    format: 'dd/mm/yyyy',
+                    autoclose: true,
+                    todayHighlight: true,
+                }).on('changeDate', function (date) {
+                    date = date.format(0, "dd/mm/yyyy");
+                    vueVM.User.Birthday = date;
+                });
+
+            });
+
         },
         mounted() {
             axios
@@ -557,6 +596,8 @@
                     if (response.data.success) {
                         this.User = response.data.content;
                         $("#image").cropper('destroy').cropper('replace', this.User.Image);
+                        console.log("this.User.Birthday = " + this.User.Birthday);
+                        this.User.Birthday = (this.User.Birthday != undefined && this.User.Birthday != null) ? (formatDate(this.User.Birthday)) : (null);
                     }
                     else {
                         iziToast.error({

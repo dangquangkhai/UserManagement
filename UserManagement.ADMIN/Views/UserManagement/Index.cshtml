@@ -13,25 +13,14 @@
 
 <header class="head">
     <div class="main-bar">
+
+
         <div class="row no-gutters">
             <div class="col-lg-6 col-sm-4">
                 <h4 class="nav_top_align">
                     <i class="fa fa-user"></i>
                     Quản Lý Nhân Viên
                 </h4>
-            </div>
-            <div class="col-lg-6 col-sm-8 col-12">
-                <ol class="breadcrumb float-right  nav_breadcrumb_top_align">
-                    <li class="breadcrumb-item">
-                        <a href="index1.html">
-                            <i class="fa fa-home" data-pack="default" data-tags=""></i> Dashboard
-                        </a>
-                    </li>
-                    <li class="breadcrumb-item">
-                        <a href="#">Users</a>
-                    </li>
-                    <li class="active breadcrumb-item">User Grid</li>
-                </ol>
             </div>
         </div>
     </div>
@@ -105,7 +94,13 @@
 @*<script type="text/javascript" src="~/Content/js/pages/users.js"></script>*@
 <script>
     function formatDate(date) {
-        return moment(date).format("DD/MM/YYYY");
+        if (date == undefined && date == null) {
+            return "Chưa đặt ngày sinh";
+        }
+        else {
+            return moment(date).format("DD/MM/YYYY");
+        }
+
     }
 </script>
 <script>
@@ -139,7 +134,7 @@
                     if (response.data.success) {
                         this.UserList = response.data.content;
                         for (var i = 0; i < this.UserList.length; i++) {
-                            this.UserList[i].Birthday = moment(this.UserList[i].Birthday).format("DD/MM/YYYY");
+                            this.UserList[i].Birthday = formatDate(this.UserList[i].Birthday);
                         }
                     }
                 });

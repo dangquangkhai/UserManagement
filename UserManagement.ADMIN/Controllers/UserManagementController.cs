@@ -65,11 +65,29 @@ namespace UserManagement.ADMIN.Controllers
 
         }
 
+
+
         [HttpGet]
-        public ActionResult EditUser(int ID)
+        public ActionResult EditUser(int? ID = null)
         {
-            ViewBag.id = ID;
-            return View();
+            try
+            {
+                if(ID == null)
+                {
+                    throw new Exception("Error");
+                }
+                else
+                {
+                    ViewBag.id = ID;
+                    return View();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("NotFound", "Error");
+            }
+
         }
 
 

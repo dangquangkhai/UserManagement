@@ -107,3 +107,6 @@ D:\Projects\UserManagement\UserManagement.ADMIN\obj\Debug\UserManagement.ADMIN.d
 D:\Projects\UserManagement\UserManagement.ADMIN\obj\Debug\UserManagement.ADMIN.pdb
 D:\Projects\UserManagement\UserManagement.ADMIN\bin\EntityFramework.SqlServer.dll
 D:\Projects\UserManagement\UserManagement.ADMIN\bin\EntityFramework.SqlServer.xml
+D:\Projects\UserManagement\UserManagement.ADMIN\bin\UserManagement.PERMISSON.dll
+D:\Projects\UserManagement\UserManagement.ADMIN\bin\UserManagement.PERMISSON.pdb
+D:\Projects\UserManagement\UserManagement.ADMIN\bin\UserManagement.PERMISSON.dll.config

@@ -171,7 +171,9 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PGroupController.cs" />
     <Compile Include="Controllers\UserManagementController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -196,6 +198,7 @@
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\components.css" />
     <Content Include="Content\css\custom.css" />
+    <Content Include="Content\css\error.css" />
     <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Content\css\lib\colorpicker\img\alpha-horizontal.png" />
     <Content Include="Content\css\lib\colorpicker\img\alpha.png" />
@@ -535,6 +538,7 @@
     <Content Include="Content\img\cp.png" />
     <Content Include="Content\img\datatable-row-openclose.png" />
     <Content Include="Content\img\default-person.jpg" />
+    <Content Include="Content\img\emoji.png" />
     <Content Include="Content\img\firefox.png" />
     <Content Include="Content\img\flags\au.png" />
     <Content Include="Content\img\flags\ca.png" />
@@ -1771,6 +1775,10 @@
     <Content Include="Views\UserManagement\Index.cshtml" />
     <Content Include="Views\UserManagement\CreateUser.cshtml" />
     <Content Include="Views\UserManagement\EditUser.cshtml" />
+    <Content Include="Views\Error\Forbiden.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\PGroup\Index.cshtml" />
+    <Content Include="Views\PGroup\CreatePGroup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1793,6 +1801,10 @@
     <ProjectReference Include="..\UserManagement.LIBRARY\UserManagement.LIBRARY.csproj">
       <Project>{c7885a05-9d4e-4f43-9f7b-ab5d57cdc9c4}</Project>
       <Name>UserManagement.LIBRARY</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UserManagement.PERMISSON\UserManagement.PERMISSON.csproj">
+      <Project>{4bd64194-1b4e-4485-a208-dc530eb26114}</Project>
+      <Name>UserManagement.PERMISSON</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

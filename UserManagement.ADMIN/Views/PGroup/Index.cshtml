@@ -1,0 +1,211 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!--Plugin styles-->
+<link type="text/css" rel="stylesheet" href="~/Content/vendors/select2/css/select2.min.css" />
+<link type="text/css" rel="stylesheet" href="~/Content/css/pages/dataTables.bootstrap.css" />
+<!--End of plugin styles-->
+<!--Page level styles-->
+<link type="text/css" rel="stylesheet" href="~/Content/css/pages/tables.css" />
+<link type="text/css" rel="stylesheet" href="#" id="skin_change" />
+
+<link type="text/css" rel="stylesheet" href="~/Content/vendors/modal/css/component.css" />
+<link type="text/css" rel="stylesheet" href="~/Content/vendors/bootstrap-tagsinput/css/bootstrap-tagsinput.css" />
+<link rel="stylesheet" type="text/css" href="~/Content/vendors/animate/css/animate.min.css" />
+
+<header class="head">
+    <div class="main-bar">
+
+
+        <div class="row no-gutters">
+            <div class="col-lg-6 col-sm-4">
+                <h4 class="nav_top_align">
+                    <i class="fa fa-user"></i>
+                    Quản Lý Phân Quyền Cho Group
+                </h4>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="outer" id="GroupTableApp">
+    <div class="inner bg-container">
+        <div class="card">
+            <div class="card-header bg-white">
+                Group
+            </div>
+            <div class="card-block m-t-35" id="user_body">
+                <div class="table-toolbar">
+                    <div class="btn-group">
+                        <a v-on:click="AddGroup()" data-toggle="modal" @*data-target="#CreateGroup"*@ id="editable_table_new" class=" btn btn-default">
+                            Thêm Group <i class="fa fa-plus" style="padding-left:5px;"></i>
+                        </a>
+                    </div>
+                    <div class="btn-group float-right users_grid_tools">
+                        <div class="tools"></div>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <table class="table no-footer" id="editable_table" role="grid">
+                            <thead>
+                                <tr role="row">
+                                    <th class="sorting_asc wid-20" tabindex="0" rowspan="1" colspan="1">STT</th>
+                                    <th class="sorting wid-25" tabindex="0" rowspan="1" colspan="1">>Tên Group</th>
+                                    <th class="sorting wid-25" tabindex="0" rowspan="1" colspan="1">>Mô tả</th>
+                                    <th class="sorting wid-25" tabindex="0" rowspan="1" colspan="1">Thời gian tạo</th>
+                                    <th class="sorting wid-10" tabindex="0" rowspan="1" colspan="1">Người tạo</th>
+                                    <th class="sorting wid-20" tabindex="0" rowspan="1" colspan="1">Thời gian chỉnh sửa</th>
+                                    <th class="sorting wid-10" tabindex="0" rowspan="1" colspan="1">Thao Tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr role="row" class="event" v-for="(item, index) in GroupList">
+                                    <td class="sorting_1">{{ index + 1 }}</td>
+                                    <td>{{ item.Name }}</td>
+                                    <td>{{ item.Descriptions }}</td>
+                                    <td class="center">{{ item.Created }}</td>
+                                    <td>{{ item.CreatorID }}</td>
+                                    <td>{{ item.Modified }}</td>
+                                    <td>{{ item.Modifier }}</td>
+                                    <td>
+                                        <a href="view_user.html" data-toggle="tooltip" data-placement="top" title="View User">
+                                            <i class="fa fa-eye text-success"></i>
+                                        </a>&nbsp; &nbsp;
+                                        <a class="edit" data-toggle="tooltip" data-placement="top" title="Edit" @*href="edit_user.html"*@ v-on:click="EditUser(item.ID)">
+                                            <i class="fa fa-pencil text-warning"></i>
+                                        </a>&nbsp; &nbsp;
+                                        <a class="delete hidden-xs hidden-sm" data-toggle="tooltip" data-placement="top" title="Delete" href="delete_user.html">
+                                            <i class="fa fa-trash text-danger"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- END EXAMPLE TABLE PORTLET-->
+            </div>
+        </div>
+    </div>
+    <!-- /.inner -->
+
+    <div class="modal fade" id="CreateGroup" role="dialog" aria-labelledby="modalLabelprimary">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h4 class="modal-title text-white" id="modalLabelprimary">Tạo Group</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        This is a modal window. You can do the following things with it:
+                    </p>
+                    <ul>
+                        <li>
+                            <strong>Read:</strong> modal windows will probably tell you something important
+                            so don't forget to read what they say.
+                        </li>
+                        <li>
+                            <strong>Look:</strong> a modal window enjoys a certain kind of attention; just
+                            look at it and appreciate its presence.
+                        </li>
+                        <li>
+                            <strong>Close:</strong> click on the button below to close the modal.
+                        </li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn  btn-primary" data-dismiss="modal" v-on:click="Alert()">Close me!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<!-- /.outer -->
+<!-- Modal -->
+<!--Plugin scripts-->
+<script type="text/javascript" src="~/Content/vendors/select2/js/select2.js"></script>
+<script type="text/javascript" src="~/Content/vendors/datatables/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="~/Content/vendors/datatables/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="~/Content/vendors/datatables/js/dataTables.responsive.min.js"></script>
+<script type="text/javascript" src="~/Content/vendors/datatables/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="~/Content/vendors/datatables/js/buttons.colVis.min.js"></script>
+<script type="text/javascript" src="~/Content/vendors/datatables/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="~/Content/vendors/datatables/js/buttons.bootstrap.min.js"></script>
+<script type="text/javascript" src="~/Content/vendors/datatables/js/buttons.print.min.js"></script>
+<script type="text/javascript" src="~/Content/vendors/moment/js/moment.min.js"></script>
+<!--End of plugin scripts-->
+<!--Page level scripts-->
+@*<script type="text/javascript" src="~/Content/js/pages/users.js"></script>*@
+<script>
+    function formatDate(date) {
+        if (date == undefined && date == null) {
+            return "Chưa đặt ngày sinh";
+        }
+        else {
+            return moment(date).format("DD/MM/YYYY");
+        }
+
+    }
+</script>
+<script>
+    new Vue({
+        el: '#GroupTableApp',
+        data: {
+            GroupList: []
+        },
+        updated() {
+            $(document).ready(function () {
+                var table = $('#editable_table');
+                table.DataTable({
+                    dom: "<'text-right'B><f>lr<'table-responsive't><'row'<'col-md-5 col-12'i><'col-md-7 col-12'p>>",
+                    buttons: [
+                        'copy', 'csv', 'print'
+                    ]
+                });
+                var tableWrapper = $("#editable_table_wrapper");
+                tableWrapper.find(".dataTables_length select").select2({
+                    showSearchInput: false //hide search box with special css class
+                }); // initialize select2 dropdown
+                $("#editable_table_wrapper .dt-buttons .btn").addClass('btn-secondary').removeClass('btn-default');
+                $(".dataTables_wrapper").removeClass("form-inline");
+            });
+        },
+        mounted() {
+            //Get own spaces
+            axios
+                .get(API_BASE_URL + '/PGroup/GetAllGroup')
+                .then(response => {
+                    if (response.data.success) {
+                        this.GroupList = response.data.content;
+                        for (var i = 0; i < this.GroupList.length; i++) {
+                            this.GroupList[i].Created = formatDate(this.GroupList[i].Created);
+                            this.GroupList[i].Modified = formatDate(this.GroupList[i].Modified);
+
+                        }
+                    }
+                    else {
+                        iziToast.error({
+                            title: 'Lỗi',
+                            message: response.data.content,
+                            position: 'bottomLeft'
+                        });
+                    }
+                });
+        },
+        methods: {
+            AddGroup: function () {
+                $('#CreateGroup').modal({
+                    show: true
+                }); 
+            },
+            EditUser: function (ID) {
+                window.open(API_BASE_URL + "/UserManagement/EditUser?Id=" + ID, '_blank');
+            }
+        }
+
+    })
+</script>
