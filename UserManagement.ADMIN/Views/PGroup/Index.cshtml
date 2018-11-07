@@ -9,11 +9,16 @@
 <!--End of plugin styles-->
 <!--Page level styles-->
 <link type="text/css" rel="stylesheet" href="~/Content/css/pages/tables.css" />
-<link type="text/css" rel="stylesheet" href="#" id="skin_change" />
 
 <link type="text/css" rel="stylesheet" href="~/Content/vendors/modal/css/component.css" />
 <link type="text/css" rel="stylesheet" href="~/Content/vendors/bootstrap-tagsinput/css/bootstrap-tagsinput.css" />
 <link rel="stylesheet" type="text/css" href="~/Content/vendors/animate/css/animate.min.css" />
+
+<style>
+    div.custom-margin-model{
+        margin-top:150px;
+    }
+</style>
 
 <header class="head">
     <div class="main-bar">
@@ -52,11 +57,12 @@
                             <thead>
                                 <tr role="row">
                                     <th class="sorting_asc wid-20" tabindex="0" rowspan="1" colspan="1">STT</th>
-                                    <th class="sorting wid-25" tabindex="0" rowspan="1" colspan="1">>Tên Group</th>
-                                    <th class="sorting wid-25" tabindex="0" rowspan="1" colspan="1">>Mô tả</th>
+                                    <th class="sorting wid-25" tabindex="0" rowspan="1" colspan="1">Tên Group</th>
+                                    <th class="sorting wid-25" tabindex="0" rowspan="1" colspan="1">Mô tả</th>
                                     <th class="sorting wid-25" tabindex="0" rowspan="1" colspan="1">Thời gian tạo</th>
                                     <th class="sorting wid-10" tabindex="0" rowspan="1" colspan="1">Người tạo</th>
                                     <th class="sorting wid-20" tabindex="0" rowspan="1" colspan="1">Thời gian chỉnh sửa</th>
+                                    <th class="sorting wid-20" tabindex="0" rowspan="1" colspan="1">Người chỉnh sửa</th>
                                     <th class="sorting wid-10" tabindex="0" rowspan="1" colspan="1">Thao Tác</th>
                                 </tr>
                             </thead>
@@ -73,7 +79,7 @@
                                         <a href="view_user.html" data-toggle="tooltip" data-placement="top" title="View User">
                                             <i class="fa fa-eye text-success"></i>
                                         </a>&nbsp; &nbsp;
-                                        <a class="edit" data-toggle="tooltip" data-placement="top" title="Edit" @*href="edit_user.html"*@ v-on:click="EditUser(item.ID)">
+                                        <a class="edit" @*data-toggle="tooltip" data-placement="top"*@ title="Edit" href="#" v-on:click="EditGroup(item.ID)">
                                             <i class="fa fa-pencil text-warning"></i>
                                         </a>&nbsp; &nbsp;
                                         <a class="delete hidden-xs hidden-sm" data-toggle="tooltip" data-placement="top" title="Delete" href="delete_user.html">
@@ -93,34 +99,56 @@
 
     <div class="modal fade" id="CreateGroup" role="dialog" aria-labelledby="modalLabelprimary">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
+            <div class="modal-content custom-margin-model">
                 <div class="modal-header bg-primary">
                     <h4 class="modal-title text-white" id="modalLabelprimary">Tạo Group</h4>
                 </div>
                 <div class="modal-body">
-                    <p>
-                        This is a modal window. You can do the following things with it:
-                    </p>
-                    <ul>
-                        <li>
-                            <strong>Read:</strong> modal windows will probably tell you something important
-                            so don't forget to read what they say.
-                        </li>
-                        <li>
-                            <strong>Look:</strong> a modal window enjoys a certain kind of attention; just
-                            look at it and appreciate its presence.
-                        </li>
-                        <li>
-                            <strong>Close:</strong> click on the button below to close the modal.
-                        </li>
-                    </ul>
+                    <form>
+                        <div class="form-group is-empty label-floating">
+                            <label class="control-label" for="list-name">Tên Group:</label>
+                            <input type="text" class="form-control" id="list-name" v-model="GroupCreate.Name">
+                        </div>
+                        <div class="form-group is-empty label-floating">
+                            <label class="control-label" for="list-name">Mô Tả:</label>
+                            <textarea id="autosize" v-model="GroupCreate.Descriptions" class="form-control" cols="50" rows="5" style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 103px;"></textarea>
+                        </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn  btn-primary" data-dismiss="modal" v-on:click="Alert()">Close me!</button>
+                    <button class="btn btn-warning" id="modal_close_btn" v-on:click="clearData(GroupCreate)" data-dismiss="modal">Hủy</button>
+                    <input type="submit" class="btn btn-primary" id="save" v-on:click="btnCreateGroup()" value="Tạo">
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="EditGroup" role="dialog" aria-labelledby="modalLabelprimary">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content custom-margin-model">
+                <div class="modal-header bg-primary">
+                    <h4 class="modal-title text-white" id="modalLabelprimary">Chỉnh Sửa Group</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group is-empty label-floating">
+                            <label class="control-label" for="list-name">Tên Group:</label>
+                            <input type="text" class="form-control" id="list-name" v-model="GroupEdit.Name">
+                        </div>
+                        <div class="form-group is-empty label-floating">
+                            <label class="control-label" for="list-name">Mô Tả:</label>
+                            <textarea id="autosize" v-model="GroupEdit.Descriptions" class="form-control" cols="50" rows="5" style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 103px;"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-warning" id="modal_close_btn" data-dismiss="modal">Hủy</button>
+                    <input type="submit" class="btn btn-primary" id="save" v-on:click="btnEditGroup()" value="Lưu">
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 
 </div>
@@ -143,19 +171,39 @@
 <script>
     function formatDate(date) {
         if (date == undefined && date == null) {
-            return "Chưa đặt ngày sinh";
+            return "Chưa đặt dữ liệu";
         }
         else {
             return moment(date).format("DD/MM/YYYY");
         }
 
     }
+
+    function isEmty(text) {
+        if (text !== undefined && text !== null && text != "") {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
 </script>
 <script>
     new Vue({
         el: '#GroupTableApp',
         data: {
-            GroupList: []
+            GroupList: [],
+            GroupCreate: {
+                Name: null,
+                Descriptions: null
+
+            },
+            GroupEdit: {
+                ID: null,
+                Name: null,
+                Descriptions: null
+
+            },
         },
         updated() {
             $(document).ready(function () {
@@ -172,6 +220,7 @@
                 }); // initialize select2 dropdown
                 $("#editable_table_wrapper .dt-buttons .btn").addClass('btn-secondary').removeClass('btn-default');
                 $(".dataTables_wrapper").removeClass("form-inline");
+                table.dataTable.ext.errMode = 'none';
             });
         },
         mounted() {
@@ -198,12 +247,118 @@
         },
         methods: {
             AddGroup: function () {
+                //$('#editable_table').dataTable().fnDestroy();
                 $('#CreateGroup').modal({
                     show: true
                 }); 
             },
-            EditUser: function (ID) {
-                window.open(API_BASE_URL + "/UserManagement/EditUser?Id=" + ID, '_blank');
+            EditGroup: function (item) {
+                //$('#editable_table').dataTable().fnDestroy();
+                axios
+                    .get(API_BASE_URL + '/PGroup/EditGroup?ID=' + item)
+                    .then(response => {
+                        this.GroupEdit = response.data.content;
+                        if (response.data.success) {
+                            //iziToast.success({
+                            //    title: 'Thành Công',
+                            //    message: "Tạo group thành công",
+                            //    position: 'bottomLeft'
+                            //});
+                            $('#EditGroup').modal({
+                                show: true
+                            });
+                            //$('#editable_table').dataTable().fnDestroy();
+                        }
+                        else {
+                            iziToast.error({
+                                title: 'Lỗi',
+                                message: (response.data.content != null) ? (response.data.content) : ("Group đã có"),
+                                position: 'bottomLeft'
+                            });
+                        }
+                    });
+
+
+            },
+
+            clearData: function (data) {
+                for (var item in data) {
+                    data[item] = null;
+                }
+            },
+
+            reloadTable: function () {
+                //Get own spaces
+                axios
+                    .get(API_BASE_URL + '/PGroup/GetAllGroup')
+                    .then(response => {
+                        if (response.data.success) {
+                            this.GroupList = response.data.content;
+                            for (var i = 0; i < this.GroupList.length; i++) {
+                                this.GroupList[i].Created = formatDate(this.GroupList[i].Created);
+                                this.GroupList[i].Modified = formatDate(this.GroupList[i].Modified);
+
+                            }
+                        }
+                        else {
+                            iziToast.error({
+                                title: 'Lỗi',
+                                message: response.data.content,
+                                position: 'bottomLeft'
+                            });
+                        }
+                    });
+            },
+            btnCreateGroup: function () {
+                if (!isEmty(this.GroupCreate.Name)) {
+                    axios
+                        .post(API_BASE_URL + '/PGroup/CreatePGroup', { "newGroup": this.GroupCreate })
+                        .then(response => {
+                            if (response.data.success) {
+
+                                iziToast.success({
+                                    title: 'Thành Công',
+                                    message: "Tạo group thành công",
+                                    position: 'bottomLeft'
+                                });
+                                this.clearData(this.GroupCreate);
+                            }
+                            else {
+                                iziToast.error({
+                                    title: 'Lỗi',
+                                    message: (response.data.content != null) ? (response.data.content) : ("Group đã có"),
+                                    position: 'bottomLeft'
+                                });
+                                this.clearData(this.GroupCreate);
+                            }
+                        });
+
+                }
+            },
+            btnEditGroup: function () {
+                if (!isEmty(this.GroupEdit.Name)) {
+                    axios
+                        .post(API_BASE_URL + '/PGroup/EditPGroup', { "ID": this.GroupEdit.ID, "group": this.GroupEdit })
+                        .then(response => {
+                            if (response.data.success) {
+                                $('#EditGroup').modal('toggle'); 
+                                iziToast.success({
+                                    title: 'Thành Công',
+                                    message: "Tạo group thành công",
+                                    position: 'bottomLeft'
+                                });
+                                this.reloadTable();
+                            }
+                            else {
+                                iziToast.error({
+                                    title: 'Lỗi',
+                                    message: (response.data.content != null) ? (response.data.content) : ("Group đã có"),
+                                    position: 'bottomLeft'
+                                });
+                            }
+                        });
+
+                }
             }
         }
 

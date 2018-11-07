@@ -428,7 +428,8 @@ button, .btn {
   box-shadow: 0 10px 8px 3px #ccc; }
 
 .left_media {
-  background-image: url("../img/2.JPG"); }
+  background-color:#FFF;
+  /*background-image: url("../img/images2.jpg");*/ }
 
 .user-media .user-link {
   display: block;
