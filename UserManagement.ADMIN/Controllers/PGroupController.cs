@@ -1,34 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using UserManagement.PERMISSON.Model;
-using UserManagement.PERMISSON.Provider;
-using UserManagement.LIBRARY;
-
-namespace UserManagement.ADMIN.Controllers
+﻿namespace UserManagement.ADMIN.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Web.Mvc;
+    using UserManagement.PERMISSON.Model;
+    using UserManagement.PERMISSON.Provider;
+
+    /// <summary>
+    /// Defines the <see cref="PGroupController" />
+    /// </summary>
     public class PGroupController : Controller
     {
-        PGroupProvider _provider = new PGroupProvider();
-        
+        /// <summary>
+        /// Defines the _provider
+        /// </summary>
+        internal PGroupProvider _provider = new PGroupProvider();
+
         // GET: PGroup
+        /// <summary>
+        /// The Index
+        /// </summary>
+        /// <returns>The <see cref="ActionResult"/></returns>
         public ActionResult Index()
         {
             return View();
         }
 
+        /// <summary>
+        /// The GetAllGroup
+        /// </summary>
+        /// <returns>The <see cref="ActionResult"/></returns>
         public ActionResult GetAllGroup()
         {
-            //try
-            //{
+            try
+            {
                 List<Group> data = _provider.getAllGroup();
                 List<Object> lstResult = new List<Object>();
                 foreach (var item in data)
                 {
 
-                lstResult.Add(new
+                    lstResult.Add(new
                     {
                         ID = item.ID,
                         Name = item.Name,
@@ -40,28 +51,41 @@ namespace UserManagement.ADMIN.Controllers
                     });
                 }
 
-                return Json(new { success = true, content = lstResult.ToArray() },JsonRequestBehavior.AllowGet);
-            //}
-            //catch (Exception ex)
-            //{
-            //    return Json(new { success = false, content = ex.Message.ToString() }, JsonRequestBehavior.AllowGet);
-            //}
+                return Json(new { success = true, content = lstResult.ToArray() }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    success = false,
+                    content = ex.Message.ToString()
+                }, JsonRequestBehavior.AllowGet);
+            }
         }
+
+        /// <summary>
+        /// The CreatePGroup
+        /// </summary>
+        /// <param name="newGroup">The newGroup<see cref="Group"/></param>
+        /// <returns>The <see cref="ActionResult"/></returns>
         [HttpPost]
         public ActionResult CreatePGroup(Group newGroup)
         {
             try
             {
                 return Json(new { success = _provider.createGroup(newGroup) });
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return Json(new { success = false, content = ex.Message.ToString() });
             }
-
-
         }
 
-
+        /// <summary>
+        /// The EditGroup
+        /// </summary>
+        /// <param name="ID">The ID<see cref="int"/></param>
+        /// <returns>The <see cref="ActionResult"/></returns>
         [HttpGet]
         public ActionResult EditGroup(int ID)
         {
@@ -75,7 +99,12 @@ namespace UserManagement.ADMIN.Controllers
             }
         }
 
-
+        /// <summary>
+        /// The EditPGroup
+        /// </summary>
+        /// <param name="ID">The ID<see cref="int"/></param>
+        /// <param name="group">The group<see cref="Group"/></param>
+        /// <returns>The <see cref="ActionResult"/></returns>
         [HttpPost]
 
         public ActionResult EditPGroup(int ID, Group group)
@@ -91,8 +120,18 @@ namespace UserManagement.ADMIN.Controllers
         }
 
 
+       [HttpPost]
 
-
+       public ActionResult DeleteGroup(int ID)
+        {
+            try
+            {
+                return Json(new { success = _provider.deleteGroup(ID) });
+            } catch(Exception ex)
+            {
+                return Json(new { success = false, content = ex.Message.ToString() });
+            }
+        }
 
     }
 }

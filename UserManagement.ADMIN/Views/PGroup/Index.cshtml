@@ -82,7 +82,7 @@
                                         <a class="edit" @*data-toggle="tooltip" data-placement="top"*@ title="Edit" href="#" v-on:click="EditGroup(item.ID)">
                                             <i class="fa fa-pencil text-warning"></i>
                                         </a>&nbsp; &nbsp;
-                                        <a class="delete hidden-xs hidden-sm" data-toggle="tooltip" data-placement="top" title="Delete" href="delete_user.html">
+                                        <a class="delete hidden-xs hidden-sm" data-toggle="tooltip" data-placement="top" title="Delete" href="#" v-on:click="btnDeleteGroup(item.ID)">
                                             <i class="fa fa-trash text-danger"></i>
                                         </a>
                                     </td>
@@ -212,7 +212,10 @@
                 console.log("Data Name = " + this.GroupCreate.Name);
             },
             'GroupCreate.Descriptions': function (val) {
+
+                console.log("Data = " + val);
                 this.GroupCreate.Descriptions = val;
+                console.log("Data Name = " + this.GroupCreate.Descriptions);
             }
         },
         updated() {
@@ -326,13 +329,14 @@
                         .post(API_BASE_URL + '/PGroup/CreatePGroup', { "newGroup": this.GroupCreate })
                         .then(response => {
                             if (response.data.success) {
-
+                                $('#CreateGroup').modal('toggle'); 
                                 iziToast.success({
                                     title: 'Thành Công',
                                     message: "Tạo group thành công",
                                     position: 'bottomLeft'
                                 });
                                 this.clearData(this.GroupCreate);
+                                this.reloadTable();
                             }
                             else {
                                 iziToast.error({
@@ -370,6 +374,27 @@
                         });
 
                 }
+            },
+            btnDeleteGroup: function (ID) {
+                axios
+                    .post(API_BASE_URL + '/PGroup/DeleteGroup', { "ID": ID })
+                    .then(response => {
+                        if (response.data.success) {
+                            iziToast.success({
+                                title: 'Thành Công',
+                                message: "Xóa thành công",
+                                position: 'bottomLeft'
+                            });
+                            this.reloadTable();
+                        }
+                        else {
+                            iziToast.error({
+                                title: 'Lỗi',
+                                message: (response.data.content != null) ? (response.data.content) : ("Group đã có"),
+                                position: 'bottomLeft'
+                            });
+                        }
+                    });
             }
         }
 

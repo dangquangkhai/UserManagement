@@ -90,6 +90,25 @@ namespace UserManagement.PERMISSON.Provider
         }
 
 
+        public bool deleteGroup(int ID)
+        {
+            try
+            {
+                Group delete = base.db.Groups.Where(g => g.ID == ID).FirstOrDefault();
+                base.db.Groups.Attach(delete);
+                base.db.Groups.Remove(delete);
+                base.db.SaveChanges();
+                return true;
+
+
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+
     }
 
 }
