@@ -64,6 +64,7 @@ namespace UserManagement.PERMISSON.Provider
                 Group editGroup = base.db.Groups.Where(g => g.ID == ID).FirstOrDefault();
                 editGroup.Name = group.Name;
                 editGroup.Descriptions = group.Descriptions;
+                editGroup.Modified = DateTime.Today;
                 base.db.SaveChanges();
                 return true;
                 

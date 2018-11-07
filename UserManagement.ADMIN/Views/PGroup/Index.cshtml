@@ -205,6 +205,16 @@
 
             },
         },
+        watch: {
+            'GroupCreate.Name': function (val) {
+                console.log("Data = " + val);
+                this.GroupCreate.Name = val;
+                console.log("Data Name = " + this.GroupCreate.Name);
+            },
+            'GroupCreate.Descriptions': function (val) {
+                this.GroupCreate.Descriptions = val;
+            }
+        },
         updated() {
             $(document).ready(function () {
                 var table = $('#editable_table');
@@ -311,6 +321,7 @@
             },
             btnCreateGroup: function () {
                 if (!isEmty(this.GroupCreate.Name)) {
+                    console.log("Name = " + this.GroupCreate.Name)
                     axios
                         .post(API_BASE_URL + '/PGroup/CreatePGroup', { "newGroup": this.GroupCreate })
                         .then(response => {
@@ -344,7 +355,7 @@
                                 $('#EditGroup').modal('toggle'); 
                                 iziToast.success({
                                     title: 'Thành Công',
-                                    message: "Tạo group thành công",
+                                    message: "Chỉnh sữa thành công",
                                     position: 'bottomLeft'
                                 });
                                 this.reloadTable();

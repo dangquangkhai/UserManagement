@@ -21,7 +21,7 @@ namespace UserManagement.PERMISSON.Model
         [StringLength(50)]
         public string Name { get; set; }
 
-        [Column(TypeName = "text")]
+        [Column(TypeName = "ntext")]
         public string Descriptions { get; set; }
 
         public DateTime? Created { get; set; }
@@ -32,7 +32,7 @@ namespace UserManagement.PERMISSON.Model
 
         public int? Modifier { get; set; }
 
-        [StringLength(10)]
+        [StringLength(50)]
         public string Category { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -21,7 +21,7 @@ namespace UserManagement.PERMISSON.Model
         [StringLength(50)]
         public string Name { get; set; }
 
-        [Column(TypeName = "text")]
+        [Column(TypeName = "ntext")]
         public string Descriptions { get; set; }
 
         public DateTime? Created { get; set; }
