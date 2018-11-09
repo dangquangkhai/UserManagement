@@ -428,7 +428,8 @@ button, .btn {
   box-shadow: 0 10px 8px 3px #ccc; }
 
 .left_media {
-  background-image: url("../img/2.JPG"); }
+  background-color:#FFF;
+  /*background-image: url("../img/images2.jpg");*/ }
 
 .user-media .user-link {
   display: block;
@@ -868,7 +869,7 @@ button, .btn {
   height: 30px;
   font-size: 22px !important; }
 
-.sidebar-right-opened #right {
+/*.sidebar-right-opened #right {
   box-shadow: 8px 0 7px 1px #999;
   right: 0; }
 
@@ -876,7 +877,7 @@ button, .btn {
   z-index: 90; }
 
 .sidebar-right-opened .no-print {
-  right: 250px !important; }
+  right: 250px !important; }*/
 
 .skinmulti_btn {
   width: 40px;
