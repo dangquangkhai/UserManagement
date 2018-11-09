@@ -1,8 +1,402 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<!--Plugin styles-->
+<link type="text/css" rel="stylesheet" href="~/Content/vendors/select2/css/select2.min.css" />
+<link type="text/css" rel="stylesheet" href="~/Content/css/pages/dataTables.bootstrap.css" />
+<!--End of plugin styles-->
+<!--Page level styles-->
+<link type="text/css" rel="stylesheet" href="~/Content/css/pages/tables.css" />
 
+<link type="text/css" rel="stylesheet" href="~/Content/vendors/modal/css/component.css" />
+<link type="text/css" rel="stylesheet" href="~/Content/vendors/bootstrap-tagsinput/css/bootstrap-tagsinput.css" />
+<link rel="stylesheet" type="text/css" href="~/Content/vendors/animate/css/animate.min.css" />
+
+<style>
+    div.custom-margin-model {
+        margin-top: 150px;
+    }
+</style>
+
+<header class="head">
+    <div class="main-bar">
+
+
+        <div class="row no-gutters">
+            <div class="col-lg-6 col-sm-4">
+                <h4 class="nav_top_align">
+                    <i class="fa fa-user"></i>
+                    Quản lý Permission (Role)
+                </h4>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="outer" id="RoleTableApp">
+    <div class="inner bg-container">
+        <div class="card">
+            <div class="card-header bg-white">
+                Thêm mới Role, chỉnh sửa thông tin Role
+            </div>
+            <div class="card-block m-t-35" id="user_body">
+                <div class="table-toolbar">
+                    <div class="btn-Role">
+                        <a v-on:click="AddRole()" data-toggle="modal" @*data-target="#CreateRole"*@ id="editable_table_new" class=" btn btn-default">
+                            Thêm Role <i class="fa fa-plus" style="padding-left:5px;"></i>
+                        </a>
+                    </div>
+                    <div class="btn-Role float-right users_grid_tools">
+                        <div class="tools"></div>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <table class="table no-footer" id="editable_table" role="grid">
+                            <thead>
+                                <tr role="row">
+                                    <th class="sorting_asc wid-20" tabindex="0" rowspan="1" colspan="1">STT</th>
+                                    <th class="sorting wid-25" tabindex="0" rowspan="1" colspan="1">Tên Role</th>
+                                    <th class="sorting wid-25" tabindex="0" rowspan="1" colspan="1">Mô tả</th>
+                                    <th class="sorting wid-25" tabindex="0" rowspan="1" colspan="1">Thời gian tạo</th>
+                                    <th class="sorting wid-10" tabindex="0" rowspan="1" colspan="1">Người tạo</th>
+                                    <th class="sorting wid-20" tabindex="0" rowspan="1" colspan="1">Thời gian chỉnh sửa</th>
+                                    <th class="sorting wid-20" tabindex="0" rowspan="1" colspan="1">Người chỉnh sửa</th>
+                                    <th class="sorting wid-10" tabindex="0" rowspan="1" colspan="1">Thao Tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr role="row" class="event" v-for="(item, index) in RoleList">
+                                    <td class="sorting_1">{{ index + 1 }}</td>
+                                    <td>{{ item.Name }}</td>
+                                    <td>{{ item.Descriptions }}</td>
+                                    <td class="center">{{ item.Created }}</td>
+                                    <td>{{ item.CreatorID }}</td>
+                                    <td>{{ item.Modified }}</td>
+                                    <td>{{ item.Modifier }}</td>
+                                    <td>
+                                        <a href="view_user.html" data-toggle="tooltip" data-placement="top" title="View User">
+                                            <i class="fa fa-eye text-success"></i>
+                                        </a>&nbsp; &nbsp;
+                                        <a class="edit" @*data-toggle="tooltip" data-placement="top"*@ title="Edit" href="#" v-on:click="EditRole(item.ID)">
+                                            <i class="fa fa-pencil text-warning"></i>
+                                        </a>&nbsp; &nbsp;
+                                        <a class="delete hidden-xs hidden-sm" data-toggle="tooltip" data-placement="top" title="Delete" href="#" v-on:click="btnDeleteRole(item.ID)">
+                                            <i class="fa fa-trash text-danger"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- END EXAMPLE TABLE PORTLET-->
+            </div>
+        </div>
+    </div>
+    <!-- /.inner -->
+
+    <div class="modal fade" id="CreateRole" role="dialog" aria-labelledby="modalLabelprimary">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content custom-margin-model">
+                <div class="modal-header bg-primary">
+                    <h4 class="modal-title text-white" id="modalLabelprimary">Tạo Role</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-Role is-empty label-floating">
+                            <label class="control-label" for="list-name">Tên Role:</label>
+                            <input type="text" class="form-control" id="list-name" v-model="RoleCreate.Name">
+                        </div>
+                        <div class="form-Role is-empty label-floating">
+                            <label class="control-label" for="list-name">Mô Tả:</label>
+                            <textarea id="autosize" v-model="RoleCreate.Descriptions" class="form-control" cols="50" rows="5" style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 103px;"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-warning" id="modal_close_btn" v-on:click="clearData(RoleCreate)" data-dismiss="modal">Hủy</button>
+                    <input type="submit" class="btn btn-primary" id="save" v-on:click="btnCreateRole()" value="Tạo">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="EditRole" role="dialog" aria-labelledby="modalLabelprimary">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content custom-margin-model">
+                <div class="modal-header bg-primary">
+                    <h4 class="modal-title text-white" id="modalLabelprimary">Chỉnh Sửa Role</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-Role is-empty label-floating">
+                            <label class="control-label" for="list-name">Tên Role:</label>
+                            <input type="text" class="form-control" id="list-name" v-model="RoleEdit.Name">
+                        </div>
+                        <div class="form-Role is-empty label-floating">
+                            <label class="control-label" for="list-name">Mô Tả:</label>
+                            <textarea id="autosize" v-model="RoleEdit.Descriptions" class="form-control" cols="50" rows="5" style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 103px;"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-warning" id="modal_close_btn" data-dismiss="modal">Hủy</button>
+                    <input type="submit" class="btn btn-primary" id="save" v-on:click="btnEditRole()" value="Lưu">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+<!-- /.outer -->
+<!-- Modal -->
+<!--Plugin scripts-->
+<script type="text/javascript" src="~/Content/vendors/select2/js/select2.js"></script>
+<script type="text/javascript" src="~/Content/vendors/datatables/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="~/Content/vendors/datatables/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="~/Content/vendors/datatables/js/dataTables.responsive.min.js"></script>
+<script type="text/javascript" src="~/Content/vendors/datatables/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="~/Content/vendors/datatables/js/buttons.colVis.min.js"></script>
+<script type="text/javascript" src="~/Content/vendors/datatables/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="~/Content/vendors/datatables/js/buttons.bootstrap.min.js"></script>
+<script type="text/javascript" src="~/Content/vendors/datatables/js/buttons.print.min.js"></script>
+<script type="text/javascript" src="~/Content/vendors/moment/js/moment.min.js"></script>
+<!--End of plugin scripts-->
+<!--Page level scripts-->
+@*<script type="text/javascript" src="~/Content/js/pages/users.js"></script>*@
+<script>
+    function formatDate(date) {
+        if (date == undefined && date == null) {
+            return "Chưa đặt dữ liệu";
+        }
+        else {
+            return moment(date).format("DD/MM/YYYY");
+        }
+
+    }
+
+    function isEmty(text) {
+        if (text !== undefined && text !== null && text != "") {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+</script>
+<script>
+    new Vue({
+        el: '#RoleTableApp',
+        data: {
+            RoleList: [],
+            RoleCreate: {
+                Name: null,
+                Descriptions: null
+
+            },
+            RoleEdit: {
+                ID: null,
+                Name: null,
+                Descriptions: null
+
+            },
+        },
+        watch: {
+            'RoleCreate.Name': function (val) {
+                console.log("Data = " + val);
+                this.RoleCreate.Name = val;
+                console.log("Data Name = " + this.RoleCreate.Name);
+            },
+            'RoleCreate.Descriptions': function (val) {
+
+                console.log("Data = " + val);
+                this.RoleCreate.Descriptions = val;
+                console.log("Data Name = " + this.RoleCreate.Descriptions);
+            }
+        },
+        updated() {
+            $(document).ready(function () {
+                var table = $('#editable_table');
+                table.DataTable({
+                    dom: "<'text-right'B><f>lr<'table-responsive't><'row'<'col-md-5 col-12'i><'col-md-7 col-12'p>>",
+                    buttons: [
+                        'copy', 'csv', 'print'
+                    ]
+                });
+                var tableWrapper = $("#editable_table_wrapper");
+                tableWrapper.find(".dataTables_length select").select2({
+                    showSearchInput: false //hide search box with special css class
+                }); // initialize select2 dropdown
+                $("#editable_table_wrapper .dt-buttons .btn").addClass('btn-secondary').removeClass('btn-default');
+                $(".dataTables_wrapper").removeClass("form-inline");
+                table.dataTable.ext.errMode = 'none';
+            });
+        },
+        mounted() {
+            //Get own spaces
+            axios
+                .get(API_BASE_URL + '/PRole/GetAllRole')
+                .then(response => {
+                    if (response.data.success) {
+                        this.RoleList = response.data.content;
+                        for (var i = 0; i < this.RoleList.length; i++) {
+                            this.RoleList[i].Created = formatDate(this.RoleList[i].Created);
+                            this.RoleList[i].Modified = formatDate(this.RoleList[i].Modified);
+
+                        }
+                    }
+                    else {
+                        iziToast.error({
+                            title: 'Lỗi',
+                            message: response.data.content,
+                            position: 'bottomLeft'
+                        });
+                    }
+                });
+        },
+        methods: {
+            AddRole: function () {
+                //$('#editable_table').dataTable().fnDestroy();
+                $('#CreateRole').modal({
+                    show: true
+                });
+            },
+            EditRole: function (item) {
+                //$('#editable_table').dataTable().fnDestroy();
+                axios
+                    .get(API_BASE_URL + '/PRole/EditRole?ID=' + item)
+                    .then(response => {
+                        this.RoleEdit = response.data.content;
+                        if (response.data.success) {
+                            //iziToast.success({
+                            //    title: 'Thành Công',
+                            //    message: "Tạo Role thành công",
+                            //    position: 'bottomLeft'
+                            //});
+                            $('#EditRole').modal({
+                                show: true
+                            });
+                            //$('#editable_table').dataTable().fnDestroy();
+                        }
+                        else {
+                            iziToast.error({
+                                title: 'Lỗi',
+                                message: (response.data.content != null) ? (response.data.content) : ("Role đã có"),
+                                position: 'bottomLeft'
+                            });
+                        }
+                    });
+
+
+            },
+
+            clearData: function (data) {
+                for (var item in data) {
+                    data[item] = null;
+                }
+            },
+
+            reloadTable: function () {
+                //Get own spaces
+                axios
+                    .get(API_BASE_URL + '/PRole/GetAllRole')
+                    .then(response => {
+                        if (response.data.success) {
+                            this.RoleList = response.data.content;
+                            for (var i = 0; i < this.RoleList.length; i++) {
+                                this.RoleList[i].Created = formatDate(this.RoleList[i].Created);
+                                this.RoleList[i].Modified = formatDate(this.RoleList[i].Modified);
+
+                            }
+                        }
+                        else {
+                            iziToast.error({
+                                title: 'Lỗi',
+                                message: response.data.content,
+                                position: 'bottomLeft'
+                            });
+                        }
+                    });
+            },
+            btnCreateRole: function () {
+                if (!isEmty(this.RoleCreate.Name)) {
+                    console.log("Name = " + this.RoleCreate.Name)
+                    axios
+                        .post(API_BASE_URL + '/PRole/CreateRole', { "newRole": this.RoleCreate })
+                        .then(response => {
+                            if (response.data.success) {
+                                $('#CreateRole').modal('toggle');
+                                iziToast.success({
+                                    title: 'Thành Công',
+                                    message: "Tạo Role thành công",
+                                    position: 'bottomLeft'
+                                });
+                                this.clearData(this.RoleCreate);
+                                this.reloadTable();
+                            }
+                            else {
+                                iziToast.error({
+                                    title: 'Lỗi',
+                                    message: (response.data.content != null) ? (response.data.content) : ("Role đã có"),
+                                    position: 'bottomLeft'
+                                });
+                                this.clearData(this.RoleCreate);
+                            }
+                        });
+
+                }
+            },
+            btnEditRole: function () {
+                if (!isEmty(this.RoleEdit.Name)) {
+                    axios
+                        .post(API_BASE_URL + '/PRole/EditRole', { "ID": this.RoleEdit.ID, "Role": this.RoleEdit })
+                        .then(response => {
+                            if (response.data.success) {
+                                $('#EditRole').modal('toggle');
+                                iziToast.success({
+                                    title: 'Thành Công',
+                                    message: "Chỉnh sữa thành công  
+                                    position: 'bottomLeft'
+                                });
+                                this.reloadTable();
+                            }
+                            else {
+                                iziToast.error({
+                                    title: 'Lỗi',
+                                    message: (response.data.content != null) ? (response.data.content) : ("Role đã có"),
+                                    position: 'bottomLeft'
+                                });
+                            }
+                        });
+
+                }
+            },
+            btnDeleteRole: function (ID) {
+                axios
+                    .post(API_BASE_URL + '/PRole/DeleteRole', { "ID": ID })
+                    .then(response => {
+                        if (response.data.success) {
+                            iziToast.success({
+                                title: 'Thành Công',
+                                message: "Xóa thành công",
+                                position: 'bottomLeft'
+                            });
+                            this.reloadTable();
+                        }
+                        else {
+                            iziToast.error({
+                                title: 'Lỗi',
+                                message: (response.data.content != null) ? (response.data.content) : ("Role đã có"),
+                                position: 'bottomLeft'
+                            });
+                        }
+                    });
+            }
+        }
+
+    })
+</script>

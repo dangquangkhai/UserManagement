@@ -61,5 +61,9 @@ namespace UserManagement.PERMISSON.Model
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Role> Roles { get; set; }
+
+        //Virtual variable to get seleted permisson from client
+        [NotMapped]
+        public bool Checked { get; set; }
     }
 }

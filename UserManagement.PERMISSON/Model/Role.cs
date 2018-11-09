@@ -43,5 +43,9 @@ namespace UserManagement.PERMISSON.Model
         public virtual ICollection<Role_Permissions> Role_Permissions { get; set; }
 
         public virtual User User { get; set; }
+
+        //Virtual variable to get seleted permisson from client
+        [NotMapped]
+        public bool Checked { get; set; }
     }
 }

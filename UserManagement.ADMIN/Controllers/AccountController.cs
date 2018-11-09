@@ -31,7 +31,7 @@ namespace UserManagement.ADMIN.Controllers
 
         public ActionResult IsLoged()
         {
-
+            var tmp = SessionContext.CurrentUser().ID;
             if (_provider.isLoged(SessionContext.CurrentUser().ID) != null && _provider.isLoged(SessionContext.CurrentUser().ID).ID > 0)
             {
                 User userLogin = _provider.isLoged(SessionContext.CurrentUser().ID);
@@ -55,19 +55,19 @@ namespace UserManagement.ADMIN.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(string CompanyEmail, string Password, string ReturnUrl = null, int countTryLogin = 0, bool Remember = false)
+        public ActionResult Login(string Email, string Password, string ReturnUrl = null, int countTryLogin = 0, bool Remember = false)
         {
             UserProvider userProvider = new UserProvider();
             try
             {
-                User user = userProvider.GetByEmailAndPassword(CompanyEmail, Password);
+                User user = userProvider.GetByEmailAndPassword(Email, Password);
                 if (user != null)
                 {
                     //if (user.IsEnabled)
                     //{
                         User tmp = user;
                         base.ViewBag.ReturnUrl = ReturnUrl;
-                        FormsAuthenticationTicket formsAuthenticationTicket = new FormsAuthenticationTicket(1, CompanyEmail, DateTime.Now, DateTime.Now.AddMinutes(2000.0), false, "");
+                        FormsAuthenticationTicket formsAuthenticationTicket = new FormsAuthenticationTicket(1, Email, DateTime.Now, DateTime.Now.AddMinutes(2000.0), false, "");
 
                         //Set Cookie for user login without check Remember Me feauture for 2 min
                         //FormsAuthenticationTicket formsAuthenticationTicket = new FormsAuthenticationTicket(1, CompanyEmail, DateTime.Now, DateTime.Now.AddMinutes((Remember) ? (2000.0) : (2000.0)), false, "");
