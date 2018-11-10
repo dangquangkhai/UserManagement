@@ -21,6 +21,9 @@
     <style>
         button#buttonLogin {
             padding: 0.5rem 50px !important;
+            color: white;
+            background-color: #63ace5;
+            border: none;
         }
     </style>
 </head>
@@ -62,7 +65,7 @@
                             <i class="fa fa-search text-primary"></i>
                         </div>
                         <div v-if="!CheckUser">
-                                <button v-on:click="Login" id="buttonLogin" class="btn btn-outline-primary hvr-icon-spin" style="padding:0.5rem 35px !important; margin-top:4px;">Đăng Nhập</button>
+                                <button v-on:click="Login" id="buttonLogin" class="btn btn-outline-primary hvr-icon-spin" style="padding:0.5rem 35px 0.5rem 15px !important; margin-top:4px;">Đăng Nhập</button>
 
                         </div>
                         <div v-if="CheckUser">

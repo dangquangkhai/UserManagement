@@ -1,8 +1,11 @@
 ﻿namespace UserManagement.ADMIN.Controllers
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Web.Mvc;
+    using UserManagement.LIBRARY;
     using UserManagement.PERMISSON.Model;
     using UserManagement.PERMISSON.Provider;
 
@@ -120,17 +123,95 @@
         }
 
 
-       [HttpPost]
+        [HttpPost]
 
-       public ActionResult DeleteGroup(int ID)
+        public ActionResult DeleteGroup(int ID)
         {
             try
             {
                 return Json(new { success = _provider.deleteGroup(ID) });
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return Json(new { success = false, content = ex.Message.ToString() });
             }
+        }
+
+        [HttpGet]
+
+        public ActionResult PGroupRole(int ID)
+        {
+            ViewBag.ID = ID;
+            ViewBag.GroupInstance = _provider.getGroupById(ID).Name;
+            return View();
+        }
+
+        [HttpGet]
+
+        public JsonResult PRole(int ID)
+        {
+            List<Role> getAllRole = _provider.getAllRole();
+            Role[] OwnPermission = _provider.GetAllRoleOfGroupByID(ID);
+            foreach (Role item in getAllRole)
+            {
+                if (OwnPermission.Where(s => s.ID == item.ID).Count() == 1)
+                {
+                    item.Checked = true;
+                }
+            }
+            return Json(new { success = true, content = ReflectionHelper.ArrayModelToArrObject(getAllRole.ToArray()) }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+
+        public JsonResult UpdatePGoupRole(int ID, Role[] ListRole)
+        {
+            try
+            {
+                return Json(new { success = _provider.updatePGroupRole(ID, ListRole) });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, content = ex.Message.ToString() });
+            }
+
+        }
+
+        [HttpGet]
+        public ActionResult PGroupUser(int ID)
+        {
+            ViewBag.ID = ID;
+            ViewBag.GroupInstance = _provider.getGroupById(ID).Name;
+            return View();
+        }
+
+        public JsonResult PUser(int ID)
+        {
+            List<User> getAllUser = _provider.getAllUser();
+            User[] OwnPermission = _provider.GetAllUserOfGroupByID(ID);
+            foreach (User item in getAllUser)
+            {
+                if (OwnPermission.Where(s => s.ID == item.ID).Count() == 1)
+                {
+                    item.Checked = true;
+                }
+            }
+            return Json(new { success = true, content = ReflectionHelper.ArrayModelToArrObject(getAllUser.ToArray()) }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+
+        public JsonResult UpdatePGoupUser(int ID, User[] ListUser)
+        {
+            try
+            {
+                return Json(new { success = _provider.updatePGroupUser(ID, ListUser) });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, content = ex.Message.ToString() });
+            }
+
         }
 
     }

@@ -1885,6 +1885,8 @@
     <Content Include="Views\PGroup\Index.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\PRole\Index.cshtml" />
+    <Content Include="Views\PGroup\PGroupRole.cshtml" />
+    <Content Include="Views\PGroup\PGroupUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -76,13 +76,16 @@
                                     <td>{{ item.Modified }}</td>
                                     <td>{{ item.Modifier }}</td>
                                     <td>
-                                        <a href="view_user.html" data-toggle="tooltip" data-placement="top" title="View User">
-                                            <i class="fa fa-eye text-success"></i>
+                                        <a href="#" v-on:click="ViewRole(item.ID)" data-toggle="tooltip" data-placement="top" title="Quản Lý Role">
+                                            <i class="fa fa-users text-success"></i>
                                         </a>&nbsp; &nbsp;
-                                        <a class="edit" @*data-toggle="tooltip" data-placement="top"*@ title="Edit" href="#" v-on:click="EditGroup(item.ID)">
+                                        <a href="#" v-on:click="ViewUser(item.ID)" data-toggle="tooltip" data-placement="top" title="Quản Lý User">
+                                            <i class="fa fa-user text-success"></i>
+                                        </a>&nbsp; &nbsp;
+                                        <a class="edit" @*data-toggle="tooltip" data-placement="top"*@ title="Chỉnh Sửa Thông Tin Group" href="#" v-on:click="EditGroup(item.ID)">
                                             <i class="fa fa-pencil text-warning"></i>
                                         </a>&nbsp; &nbsp;
-                                        <a class="delete hidden-xs hidden-sm" data-toggle="tooltip" data-placement="top" title="Delete" href="#" v-on:click="btnDeleteGroup(item.ID)">
+                                        <a class="delete hidden-xs hidden-sm" data-toggle="tooltip" data-placement="top" title="Xóa Group" href="#" v-on:click="btnDeleteGroup(item.ID)">
                                             <i class="fa fa-trash text-danger"></i>
                                         </a>
                                     </td>
@@ -225,7 +228,21 @@
                     dom: "<'text-right'B><f>lr<'table-responsive't><'row'<'col-md-5 col-12'i><'col-md-7 col-12'p>>",
                     buttons: [
                         'copy', 'csv', 'print'
-                    ]
+                    ],
+                    "language": {
+                        "lengthMenu": "Hiển thị _MENU_ hồ sơ trên một trang",
+                        "info": "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ hồ sơ",
+                        "paginate": {
+                            "first": "Đầu",
+                            "last": "Cuối",
+                            "previous": "Trước",
+                            "next": "Sau"
+                        },
+                        "search": "Tìm kiếm",
+                        "zeroRecords": "Không có kết quả hiển thị",
+                        "infoEmpty": "Không tìm thấy",
+                        "infoFiltered": "(Từ  _MAX_ bản ghi)"
+                    }
                 });
                 var tableWrapper = $("#editable_table_wrapper");
                 tableWrapper.find(".dataTables_length select").select2({
@@ -395,6 +412,12 @@
                             });
                         }
                     });
+            },
+            ViewRole: function (ID) {
+                window.open(API_BASE_URL + "/PGroup/PGroupRole?ID=" +ID);
+            },
+            ViewUser: function (ID) {
+                window.open(API_BASE_URL + "/PGroup/PGroupUser?ID=" + ID);
             }
         }
 
