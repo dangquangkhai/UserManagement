@@ -80,7 +80,7 @@
         {
             try
             {
-                return Json(new { success = true, content = _provider.getRoleById(ID) }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = true, content = ReflectionHelper.ModelToObject(_provider.getRoleById(ID)) }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {

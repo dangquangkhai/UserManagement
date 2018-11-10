@@ -8,6 +8,7 @@ using System.Web.Script.Serialization;
 using UserManagement.LIBRARY;
 using UserManagement.LIBRARY.RDBMModels;
 using UserManagement.LIBRARY.RDBMProviders;
+using UserManagement.PERMISSON.Helper;
 
 namespace UserManagement.ADMIN.Controllers
 {
@@ -15,12 +16,15 @@ namespace UserManagement.ADMIN.Controllers
     public class UserManagementController : Controller
     {
         UserProvider _provider = new UserProvider();
+
         // GET: UserManagement
+        [RequestPermission("P_USER_MANAGEMENT_GET")]
         public ActionResult Index()
         {
             return View();
         }
 
+        [RequestPermission("P_USER_MANAGEMENT_GET")]
         public ActionResult GetUser()
         {
             List<Object> data = new List<Object>();
@@ -42,12 +46,15 @@ namespace UserManagement.ADMIN.Controllers
             return Json(new { success = true, content = data.ToArray()}, JsonRequestBehavior.AllowGet);
         }
 
+
+        [RequestPermission("P_USER_MANAGEMENT_CREATE")]
         [HttpGet]
         public ActionResult CreateUser()
         {
             return View();
         }
 
+        [RequestPermission("P_USER_MANAGEMENT_CREATE")]
         [HttpPost]
         public ActionResult CreateUser(User newUser)
         {
@@ -65,7 +72,7 @@ namespace UserManagement.ADMIN.Controllers
 
         }
 
-
+        [RequestPermission("P_USER_MANAGEMENT_EDIT")]
 
         [HttpGet]
         public ActionResult EditUser(int? ID = null)
@@ -83,17 +90,18 @@ namespace UserManagement.ADMIN.Controllers
                 }
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return RedirectToAction("NotFound", "Error");
             }
 
         }
 
-
+        [RequestPermission("P_USER_MANAGEMENT_EDIT")]
         [HttpPost]
         public ActionResult EditUser(int ID, User user)
         {
+            var tmp = user;
             try
             {
                 bool check = _provider.editUser(ID, user);

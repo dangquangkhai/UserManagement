@@ -236,7 +236,7 @@
                             <div class="col-xl-6 col-lg-8">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-fw  fa-user text-primary"></i></span>
-                                    <input type="text" placeholder=" " id="inputBirthday" name="inputBirthday" data-date-format="mm/dd/yyyy" v-model="User.Birthday"
+                                    <input type="text" placeholder=" " id="inputBirthday" name="inputBirthday" v-model="User.Birthday"
                                            class="form-control">
                                 </div>
                             </div>
@@ -359,7 +359,7 @@
 <script type="text/javascript" src="~/Content/vendors/moment/js/moment.min.js"></script>
 <script>
     function formatDate(date) {
-        return moment(date).format("DD/MM/YYYY");
+        return moment(date).format("MM/DD/YYYY");
     }
 </script>
 <script>
@@ -370,6 +370,18 @@
         },
         updated() {
             var vueVM = this;
+            $(document).ready(function () {
+                $('#inputBirthday').datepicker({
+                    format: 'mm/dd/yyyy',
+                    autoclose: true,
+                    todayHighlight: true,
+                }).on('changeDate', function (date) {
+                    date = date.format(0, "mm/dd/yyyy");
+                    vueVM.User.Birthday = date;
+                    console.log("Birthday = " + vueVM.User.Birthday);
+                });
+
+            });
             $(document).ready(function () {
 
                 var console = window.console || { log: function () { } };
@@ -576,17 +588,7 @@
 
             });
 
-            $(document).ready(function () {
-                $('#inputBirthday').datepicker({
-                    format: 'dd/mm/yyyy',
-                    autoclose: true,
-                    todayHighlight: true,
-                }).on('changeDate', function (date) {
-                    date = date.format(0, "dd/mm/yyyy");
-                    vueVM.User.Birthday = date;
-                });
 
-            });
 
         },
         mounted() {
@@ -611,8 +613,7 @@
         methods: {
             EditUser: function () {
                 this.User.Image = $("#image").cropper('getCroppedCanvas').toDataURL();
-                console.log(this.User.Image);
-                console.log("Data = " + this.User);
+                console.log("Date = "+this.User.Birthday);
                 axios
                     .post(API_BASE_URL + '/UserManagement/EditUser', { "ID": this.User.ID, "user": this.User })
                     .then(response => {
