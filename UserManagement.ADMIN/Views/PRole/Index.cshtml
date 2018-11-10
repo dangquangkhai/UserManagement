@@ -56,27 +56,27 @@
                         <table class="table no-footer" id="editable_table" role="grid">
                             <thead>
                                 <tr role="row">
-                                    <th class="sorting_asc wid-20" tabindex="0" rowspan="1" colspan="1">STT</th>
+                                    <th class="sorting_asc wid-20" tabindex="0" rowspan="1" colspan="1" style="width:5%; text-align:center;">STT</th>
                                     <th class="sorting wid-25" tabindex="0" rowspan="1" colspan="1">Tên Role</th>
                                     <th class="sorting wid-25" tabindex="0" rowspan="1" colspan="1">Mô tả</th>
                                     <th class="sorting wid-25" tabindex="0" rowspan="1" colspan="1">Thời gian tạo</th>
                                     <th class="sorting wid-10" tabindex="0" rowspan="1" colspan="1">Người tạo</th>
                                     <th class="sorting wid-20" tabindex="0" rowspan="1" colspan="1">Thời gian chỉnh sửa</th>
                                     <th class="sorting wid-20" tabindex="0" rowspan="1" colspan="1">Người chỉnh sửa</th>
-                                    <th class="sorting wid-10" tabindex="0" rowspan="1" colspan="1">Thao Tác</th>
+                                    <th class="sorting wid-10" tabindex="0" rowspan="1" colspan="1"  style="width:10%; text-align:center;">Thao Tác</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr role="row" class="event" v-for="(item, index) in RoleList">
-                                    <td class="sorting_1">{{ index + 1 }}</td>
+                                    <td class="sorting_1" style="text-align:center;">{{ index + 1 }}</td>
                                     <td>{{ item.Name }}</td>
                                     <td>{{ item.Descriptions }}</td>
                                     <td class="center">{{ item.Created }}</td>
                                     <td>{{ item.CreatorID }}</td>
                                     <td>{{ item.Modified }}</td>
                                     <td>{{ item.Modifier }}</td>
-                                    <td>
-                                        <a href="view_user.html" data-toggle="tooltip" data-placement="top" title="View User">
+                                    <td style="text-align:center;">
+                                        <a href="#" v-on:click="ViewPermission(item.ID)" data-toggle="tooltip" data-placement="top" title="View User">
                                             <i class="fa fa-eye text-success"></i>
                                         </a>&nbsp; &nbsp;
                                         <a class="edit" @*data-toggle="tooltip" data-placement="top"*@ title="Edit" href="#" v-on:click="EditRole(item.ID)">
@@ -225,7 +225,21 @@
                     dom: "<'text-right'B><f>lr<'table-responsive't><'row'<'col-md-5 col-12'i><'col-md-7 col-12'p>>",
                     buttons: [
                         'copy', 'csv', 'print'
-                    ]
+                    ],
+                    "language": {
+                        "lengthMenu": "Hiển thị _MENU_ hồ sơ trên một trang",
+                        "info": "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bảng",
+                        "paginate": {
+                            "first": "Đầu",
+                            "last": "Cuối",
+                            "previous": "Trước",
+                            "next": "Sau"
+                        },
+                        "search": "Tìm kiếm",
+                        "zeroRecords": "Không có kết quả hiển thị",
+                        "infoEmpty": "Không tìm thấy",
+                        "infoFiltered": "(Từ  _MAX_ bản ghi)"
+                    }
                 });
                 var tableWrapper = $("#editable_table_wrapper");
                 tableWrapper.find(".dataTables_length select").select2({
@@ -395,6 +409,9 @@
                             });
                         }
                     });
+            },
+            ViewPermission: function (ID) {
+                window.open(API_BASE_URL + "/PRole/PRolePermissions?ID=" + ID);
             }
         }
 

@@ -16,7 +16,7 @@ namespace UserManagement.ADMIN.Controllers
         // GET: Account
         public ActionResult Index(string ReturnUrl)
         {
-            if (User.Identity.IsAuthenticated /*_provider.isLoged(SessionContext.CurrentUser().ID) != null*/)
+            if (User.Identity.IsAuthenticated)
             {
                 return RedirectToAction("Index", "Home");
 

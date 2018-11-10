@@ -56,28 +56,28 @@
                         <table class="table no-footer" id="editable_table" role="grid">
                             <thead>
                                 <tr role="row">
-                                    <th class="sorting_asc wid-20" tabindex="0" rowspan="1" colspan="1">STT</th>
+                                    <th class="sorting_asc wid-20" tabindex="0" rowspan="1" colspan="1" style="text-align:center; width:5%;">STT</th>
                                     <th class="sorting wid-25" tabindex="0" rowspan="1" colspan="1">Tên Group</th>
                                     <th class="sorting wid-25" tabindex="0" rowspan="1" colspan="1">Mô tả</th>
                                     <th class="sorting wid-25" tabindex="0" rowspan="1" colspan="1">Thời gian tạo</th>
                                     <th class="sorting wid-10" tabindex="0" rowspan="1" colspan="1">Người tạo</th>
                                     <th class="sorting wid-20" tabindex="0" rowspan="1" colspan="1">Thời gian chỉnh sửa</th>
                                     <th class="sorting wid-20" tabindex="0" rowspan="1" colspan="1">Người chỉnh sửa</th>
-                                    <th class="sorting wid-10" tabindex="0" rowspan="1" colspan="1">Thao Tác</th>
+                                    <th class="sorting wid-10" tabindex="0" rowspan="1" colspan="1" style="text-align:center; width:10%;">Thao Tác</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr role="row" class="event" v-for="(item, index) in GroupList">
-                                    <td class="sorting_1">{{ index + 1 }}</td>
+                                    <td class="sorting_1" style="text-align:center;">{{ index + 1 }}</td>
                                     <td>{{ item.Name }}</td>
                                     <td>{{ item.Descriptions }}</td>
                                     <td class="center">{{ item.Created }}</td>
                                     <td>{{ item.CreatorID }}</td>
                                     <td>{{ item.Modified }}</td>
                                     <td>{{ item.Modifier }}</td>
-                                    <td>
+                                    <td style="text-align:center">
                                         <a href="#" v-on:click="ViewRole(item.ID)" data-toggle="tooltip" data-placement="top" title="Quản Lý Role">
-                                            <i class="fa fa-users text-success"></i>
+                                            <i class="fa fa-lock text-success"></i>
                                         </a>&nbsp; &nbsp;
                                         <a href="#" v-on:click="ViewUser(item.ID)" data-toggle="tooltip" data-placement="top" title="Quản Lý User">
                                             <i class="fa fa-user text-success"></i>
@@ -231,7 +231,7 @@
                     ],
                     "language": {
                         "lengthMenu": "Hiển thị _MENU_ hồ sơ trên một trang",
-                        "info": "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ hồ sơ",
+                        "info": "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bảng",
                         "paginate": {
                             "first": "Đầu",
                             "last": "Cuối",

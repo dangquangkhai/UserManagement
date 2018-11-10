@@ -1,0 +1,198 @@
+﻿
+@{
+    ViewBag.Title = "PRolePermissions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!--Plugin styles-->
+<link type="text/css" rel="stylesheet" href="~/Content/vendors/select2/css/select2.min.css" />
+<link type="text/css" rel="stylesheet" href="~/Content/css/pages/dataTables.bootstrap.css" />
+<!--End of plugin styles-->
+<!--Page level styles-->
+<link type="text/css" rel="stylesheet" href="~/Content/css/pages/tables.css" />
+
+<link type="text/css" rel="stylesheet" href="~/Content/vendors/modal/css/component.css" />
+<link type="text/css" rel="stylesheet" href="~/Content/vendors/bootstrap-tagsinput/css/bootstrap-tagsinput.css" />
+<link rel="stylesheet" type="text/css" href="~/Content/vendors/animate/css/animate.min.css" />
+
+<link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css" />
+
+
+
+
+<style>
+    div.custom-margin-model {
+        margin-top: 150px;
+    }
+</style>
+
+<header class="head">
+    <div class="main-bar">
+
+
+        <div class="row no-gutters">
+            <div class="col-lg-6 col-sm-4">
+                <h4 class="nav_top_align">
+                    <i class="fa fa-user"></i>
+                    Chỉnh sữa quản lý phân quyền của @ViewBag.RoleInstance
+                </h4>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="outer" id="GroupTableApp">
+    <div class="inner bg-container">
+        <div class="card">
+            <div class="card-header bg-white">
+                Permission
+            </div>
+            <div class="card-block m-t-35" id="user_body">
+                <div>
+                    <div>
+                        <table class="table table-advance no-footer" @*id="editable_table" role="grid"*@>
+                            <thead>
+                                <tr role="row">
+                                    <th tabindex="0" rowspan="1" colspan="1" style="width:5%; text-align:center">STT</th>
+                                    <th tabindex="0" rowspan="1" colspan="1">Họ Tên</th>
+                                    <th tabindex="0" rowspan="1" colspan="1" style="width:5%;">Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody v-for="(item, index) in PermissionList">
+                                <tr role="row" class="event" >
+                                    <td class="sorting_1" style="text-align:center;">{{ index + 1 }}</td>
+                                    <td>{{ item.Name }}</td>
+                                    <td style="text-align:center;">
+                                        <!-- primary -->
+                                        <div class="pretty p-default" v-if="item.Checked == true">
+                                            <input type="checkbox" checked v-model="item.Checked" />
+                                            <div class="state p-primary">
+                                                <label></label>
+                                            </div>
+                                        </div>
+
+                                        <div class="pretty p-default" v-if="item.Checked == false">
+                                            <input type="checkbox" v-model="item.Checked" />
+                                            <div class="state p-primary">
+                                                <label></label>
+                                            </div>
+                                        </div>
+                                        @*<input v-if="item.Checked == true" v-model="item.Checked" type="checkbox" class="custom-control-input" checked>
+                                            <input v-if="item.Checked == false" v-model="item.Checked" type="checkbox" class="custom-control-input">*@
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- END EXAMPLE TABLE PORTLET-->
+            </div>
+
+            <div class="card-footer card-header bg-white">
+                <div class="btn-group">
+                    <a v-on:click="SaveChange()" data-toggle="modal" class=" btn btn-danger" style="color:white;">
+                        Lưu thay đổi <i class="fa fa-check" style="padding-left:5px;"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.inner -->
+
+</div>
+<!-- /.outer -->
+<!-- Modal -->
+<!--Plugin scripts-->
+<script type="text/javascript" src="~/Content/vendors/select2/js/select2.js"></script>
+<script type="text/javascript" src="~/Content/vendors/datatables/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="~/Content/vendors/datatables/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="~/Content/vendors/datatables/js/dataTables.responsive.min.js"></script>
+<script type="text/javascript" src="~/Content/vendors/datatables/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="~/Content/vendors/datatables/js/buttons.colVis.min.js"></script>
+<script type="text/javascript" src="~/Content/vendors/datatables/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="~/Content/vendors/datatables/js/buttons.bootstrap.min.js"></script>
+<script type="text/javascript" src="~/Content/vendors/datatables/js/buttons.print.min.js"></script>
+<script type="text/javascript" src="~/Content/vendors/moment/js/moment.min.js"></script>
+<!--End of plugin scripts-->
+<!--Page level scripts-->
+@*<script type="text/javascript" src="~/Content/js/pages/users.js"></script>*@
+<script>
+    function formatDate(date) {
+        if (date == undefined && date == null) {
+            return "Chưa đặt dữ liệu";
+        }
+        else {
+            return moment(date).format("DD/MM/YYYY");
+        }
+
+    }
+
+    function isEmty(text) {
+        if (text !== undefined && text !== null && text != "") {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+</script>
+<script>
+    new Vue({
+        el: '#GroupTableApp',
+        data: {
+            PermissionList:[]
+        },
+        watch: {
+
+        },
+        updated() {
+        },
+        mounted() {
+            //Get own spaces
+            axios
+                .get(API_BASE_URL + '/PRole/PPermission?ID='+'@ViewBag.ID')
+                .then(response => {
+                    if (response.data.success) {
+                        this.PermissionList = response.data.content;
+                        //console.log("Data = " + this.RoleList);
+                    }
+                    else {
+                        iziToast.error({
+                            title: 'Lỗi',
+                            message: response.data.content,
+                            position: 'bottomLeft'
+                        });
+                    }
+                });
+            @*this.RoleList = '@ViewBag.data';
+            console.log("Data = " + this.RoleList);*@
+        },
+        methods: {
+            SaveChange: function () {
+                axios
+                    .post(API_BASE_URL + '/PRole/UpdatePRolePermission', { "ID": '@ViewBag.ID', "ListPermission": this.PermissionList })
+                    .then(response => {
+                        if (response.data.success) {
+                            iziToast.success({
+                                title: 'Thành Công',
+                                message: "Đã lưu",
+                                position: 'bottomLeft'
+                            });
+                        }
+                        else {
+                            iziToast.error({
+                                title: 'Lỗi',
+                                message: response.data.content,
+                                position: 'bottomLeft'
+                            });
+                        }
+                    });
+            }
+        }
+
+    })
+</script>
+
+
+
+
+

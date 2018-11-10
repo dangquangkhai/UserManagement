@@ -2,7 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Web.Mvc;
+    using UserManagement.LIBRARY;
     using UserManagement.PERMISSON.Model;
     using UserManagement.PERMISSON.Provider;
 
@@ -124,5 +126,43 @@
                 return Json(new { success = false, content = ex.Message.ToString() });
             }
         }
+
+        [HttpGet]
+        public ActionResult PRolePermissions(int ID)
+        {
+            ViewBag.ID = ID;
+            ViewBag.RoleInstance = _provider.getRoleById(ID).Name;
+            return View();
+        }
+
+        public JsonResult PPermission(int ID)
+        {
+            List<Permission> getAllPermission = _provider.getAllPermission();
+            Permission[] OwnPermission = _provider.GetAllPermissionsOfRoleByID(ID);
+            foreach (Permission item in getAllPermission)
+            {
+                if (OwnPermission.Where(s => s.ID == item.ID).Count() == 1)
+                {
+                    item.Checked = true;
+                }
+            }
+            return Json(new { success = true, content = ReflectionHelper.ArrayModelToArrObject(getAllPermission.OrderBy(g => g.Category).ToArray()) }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+
+        public JsonResult UpdatePRolePermission(int ID, Permission[] ListPermission)
+        {
+            try
+            {
+                return Json(new { success = _provider.updatePRolePermission(ID, ListPermission) });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, content = ex.Message.ToString() });
+            }
+
+        }
+
     }
 }

@@ -5,7 +5,7 @@
     <title>User Management | ADMIN</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="~/Content/img/logo1.ico" />
+    <link rel="shortcut icon" href="~/Content/img/logo-blue.png" />
     <!--global styles-->
     <link type="text/css" rel="stylesheet" href="~/Content/css/components.css" />
     <link type="text/css" rel="stylesheet" href="~/Content/css/custom.css" />
@@ -51,8 +51,8 @@
             <!-- .navbar -->
             <nav class="navbar navbar-static-top">
                 <div class="container-fluid m-0">
-                    <a class="navbar-brand float-left" href="index.html">
-                        <h4><img src="~/Content/img/logo1.ico" class="admin_img" alt="logo">TOOCHA ADMIN</h4>
+                    <a class="navbar-brand float-left" href="index.html" >
+                        <h4>@*<img src="~/Content/img/logo-blue.png" style="display: inline-block;height: 41px; padding-right: 10px" alt="logo">*@REMARK ADMIN</h4>
                     </a>
                     <div class="menu">
                         <span class="toggle-left" id="menu-toggle">
@@ -737,7 +737,7 @@
         <div class="wrapper">
             <div id="left">
                 <div class="menu_scroll">
-                    <div class="left_media">
+                    <div class="left_media btn-primary" style="background-color:#4fb7fe !important">
                         <div class="media user-media">
                             <div class="user-media-toggleHover">
                                 <span class="fa fa-user"></span>
@@ -745,21 +745,64 @@
                             <div class="user-wrapper">
                                 <a class="user-link" href="#">
                                     <img class="media-object img-thumbnail user-img rounded-circle admin_img3" alt="User Picture"
-                                         src="~/Content/img/admin.jpg">
-                                    <p class="user-info menu_hide" style="color:black;">Welcome Micheal</p>
+                                         src="~/Content/img/logo-blue.png">
+                                    <p class="user-info menu_hide" style="color:rgb(255, 255, 255);">Remark Company</p>
                                 </a>
                             </div>
                         </div>
                         <hr />
                     </div>
                     <ul id="menu">
+                        <li class="dropdown_menu">
+                            <a href='#'>
+                                <i class="fa fa-users"></i>
+                                <span class="link-title menu_hide">&nbsp; Quản Lý Người Dùng</span>
+                                <span class="fa arrow menu_hide"></span>
+                            </a>
+                            <ul>
+                                <li>
+                                    <a  href='@Url.Action("Index", "UserManagement")'>
+                                        <i class="fa fa-angle-right"></i>
+                                        &nbsp; Người Dùng
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                        <li class="dropdown_menu">
+                            <a href="javascript:;">
+                                <i class="fa fa-user-circle-o"></i>
+                                <span class="link-title menu_hide">&nbsp; Quản Lý Phân Quyền </span>
+                                <span class="fa arrow menu_hide"></span>
+                            </a>
+                            <ul>
+                                <li>
+                                    <a href='@Url.Action("Index", "PGroup")'>
+                                        <i class="fa fa-angle-right"></i>
+                                        &nbsp; Quản Lý Group
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href='@Url.Action("Index", "PRole")'>
+                                        <i class="fa fa-angle-right"></i>
+                                        &nbsp; Quản Lý Role
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                    </ul>
+                    @*<ul id="menu">
                         <li>
                             <a href="index1.html">
                                 <i class="fa fa-home"></i>
                                 <span class="link-title menu_hide">&nbsp;Dashboard 1</span>
                             </a>
                         </li>
-                        <li class="active">
+                        <li>
                             <a href="index.html">
                                 <i class="fa fa-tachometer"></i>
                                 <span class="link-title menu_hide">
@@ -1434,7 +1477,7 @@
                                 </li>
                             </ul>
                         </li>
-                    </ul>
+                    </ul>*@
                     <!-- /#menu -->
                 </div>
             </div>
