@@ -35,7 +35,7 @@
                 <div class="table-toolbar">
                     <div class="btn-group">
                         <a v-on:click="AddUser()" id="editable_table_new" class=" btn btn-default">
-                             Thêm Nhân Viên <i class="fa fa-plus" style="padding-left:5px;"></i>
+                            Thêm Nhân Viên <i class="fa fa-plus" style="padding-left:5px;"></i>
                         </a>
                     </div>
                     <div class="btn-group float-right users_grid_tools">
@@ -47,24 +47,34 @@
                         <table class="table no-footer" id="editable_table" role="grid">
                             <thead>
                                 <tr role="row">
-                                    <th class="sorting_asc wid-20" tabindex="0" rowspan="1" colspan="1">STT</th>
+                                    <th class="sorting_asc wid-20" tabindex="0" rowspan="1" colspan="1" style="width:5%; text-align:center;">STT</th>
                                     <th class="sorting wid-25" tabindex="0" rowspan="1" colspan="1">Email</th>
                                     <th class="sorting wid-25" tabindex="0" rowspan="1" colspan="1">Họ và Tên</th>
                                     <th class="sorting wid-10" tabindex="0" rowspan="1" colspan="1">Ngày Sinh</th>
                                     <th class="sorting wid-20" tabindex="0" rowspan="1" colspan="1">Vị Trí</th>
                                     <th class="sorting wid-15" tabindex="0" rowspan="1" colspan="1">Địa chỉ</th>
-                                    <th class="sorting wid-10" tabindex="0" rowspan="1" colspan="1">Thao Tác</th>
+                                    <th class="sorting wid-10" tabindex="0" rowspan="1" colspan="1" style="width:10%; text-align:center;">Thao Tác</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr role="row" class="event" v-for="(item, index) in UserList">
-                                    <td class="sorting_1">{{ index + 1 }}</td>
+                                    <td class="sorting_1" style="text-align:center">{{ index + 1 }}</td>
                                     <td>{{ item.Email }}</td>
                                     <td class="center">{{ item.Firstname + " " + item.Lastname }}</td>
                                     <td>{{ item.Birthday }}</td>
                                     <td>{{ item.Position }}</td>
                                     <td class="center">{{ item.Address }}</td>
-                                    <td><a href="view_user.html" data-toggle="tooltip" data-placement="top" title="View User"><i class="fa fa-eye text-success"></i></a>&nbsp; &nbsp;<a class="edit" data-toggle="tooltip" data-placement="top" title="Edit" @*href="edit_user.html"*@ v-on:click="EditUser(item.ID)"><i class="fa fa-pencil text-warning"></i></a>&nbsp; &nbsp;<a class="delete hidden-xs hidden-sm" data-toggle="tooltip" data-placement="top" title="Delete" href="delete_user.html"><i class="fa fa-trash text-danger"></i></a></td>
+                                    <td style="text-align:center;">
+                                        <a href="view_user.html" data-toggle="tooltip" data-placement="top" title="View User">
+                                            <i class="fa fa-eye text-success"></i>
+                                        </a>&nbsp; &nbsp;
+                                        <a class="edit" data-toggle="tooltip" data-placement="top" title="Edit" @*href="edit_user.html"*@ v-on:click="EditUser(item.ID)">
+                                            <i class="fa fa-pencil text-warning"></i>
+                                        </a>&nbsp; &nbsp;
+                                        <a class="delete hidden-xs hidden-sm" data-toggle="tooltip" data-placement="top" title="Delete" href="delete_user.html">
+                                            <i class="fa fa-trash text-danger"></i>
+                                        </a>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -107,7 +117,7 @@
     new Vue({
         el: '#DataTableApp',
         data: {
-            UserList:[]
+            UserList: []
         },
         updated() {
             $(document).ready(function () {
@@ -116,7 +126,21 @@
                     dom: "<'text-right'B><f>lr<'table-responsive't><'row'<'col-md-5 col-12'i><'col-md-7 col-12'p>>",
                     buttons: [
                         'copy', 'csv', 'print'
-                    ]
+                    ],
+                    "language": {
+                        "lengthMenu": "Hiển thị _MENU_ hồ sơ trên một trang",
+                        "info": "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bảng",
+                        "paginate": {
+                            "first": "Đầu",
+                            "last": "Cuối",
+                            "previous": "Trước",
+                            "next": "Sau"
+                        },
+                        "search": "Tìm kiếm",
+                        "zeroRecords": "Không có kết quả hiển thị",
+                        "infoEmpty": "Không tìm thấy",
+                        "infoFiltered": "(Từ  _MAX_ bản ghi)"
+                    }
                 });
                 var tableWrapper = $("#editable_table_wrapper");
                 tableWrapper.find(".dataTables_length select").select2({
@@ -141,7 +165,7 @@
         },
         methods: {
             AddUser: function () {
-                window.open(API_BASE_URL +"/UserManagement/CreateUser", '_blank');
+                window.open(API_BASE_URL + "/UserManagement/CreateUser", '_blank');
             },
             EditUser: function (ID) {
                 window.open(API_BASE_URL + "/UserManagement/EditUser?Id=" + ID, '_blank');
