@@ -9,6 +9,15 @@ namespace UserManagement.LIBRARY.RDBMModels
     [Table("User")]
     public partial class User
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public User()
+        {
+            Monthly_Schedule = new HashSet<Monthly_Schedule>();
+            PaymentPerDays = new HashSet<PaymentPerDay>();
+            Roll_Call = new HashSet<Roll_Call>();
+            Salaries = new HashSet<Salary>();
+        }
+
         public int ID { get; set; }
 
         [Required]
@@ -36,5 +45,17 @@ namespace UserManagement.LIBRARY.RDBMModels
         public string Phone { get; set; }
 
         public string Image { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Monthly_Schedule> Monthly_Schedule { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PaymentPerDay> PaymentPerDays { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Roll_Call> Roll_Call { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Salary> Salaries { get; set; }
     }
 }

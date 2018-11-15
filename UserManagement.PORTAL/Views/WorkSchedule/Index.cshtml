@@ -1,0 +1,372 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@* Date picker *@
+<link type="text/css" rel="stylesheet" href="~/Content/vendors/datepicker/css/bootstrap-datepicker.min.css" />
+<script type="text/javascript" src="~/Content/vendors/datepicker/js/bootstrap-datepicker.min.js"></script>
+
+
+<link type="text/css" rel="stylesheet" href="~/Content/vendors/fullcalendar/css/fullcalendar.min.css" />
+<link type="text/css" rel="stylesheet" href="~/Content/css/pages/calendar_custom.css" />
+<!--plugin script-->
+<script type="text/javascript" src="~/Content/vendors/moment/js/moment.min.js"></script>
+<script type="text/javascript" src="~/Content/vendors/fullcalendar/js/fullcalendar.min.js"></script>
+<script type="text/javascript" src="~/Content/js/pluginjs/calendarcustom.js"></script>
+<!-- end of plugin scripts -->
+@*<script type="text/javascript" src="~/Content/js/pages/calendar.js"></script>*@
+
+    
+
+
+<div id="content" class="bg-container">
+    <header class="head">
+        <div class="main-bar">
+            <div class="row no-gutters">
+                <div class="col-sm-5 col-lg-6 skin_txt">
+                    <h4 class="nav_top_align">
+                        <i class="fa fa-pencil"></i>
+                        Lịch
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="outer">
+        <div class="inner bg-light lter bg-container" id="Monthly">
+            <!-- BEGIN DATE PICKER -->
+            <div class="row">
+                <!-- .col-lg-12 -->
+                <div class="col-xl-12">
+                    <div class="card form_elements_datepicker">
+                        <div class="card-header bg-white">
+                            Đăng Ký Lịch Làm việc
+                        </div>
+                        <div class="card-block" id="datePickerBlock" style="margin-top:12px;">
+                            <div class="row">
+
+
+                                <div class="col-lg-4 input_field_sections" style="margin:auto;">
+                                    <h5>Ngày bắt đầu</h5>
+                                    <form>
+                                        <div class="input-group input-append date" id="startDay" data-date-format="dd-mm-yyyy">
+                                            <input type="text" placeholder=" " id="" name="startDay" v-model="StartDay"
+                                                   class="form-control">
+                                            <span class="input-group-addon add-on">
+                                                <i class="fa fa-calendar"></i>
+                                            </span>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="col-lg-4 input_field_sections" style="margin:auto;">
+                                    <h5>Ngày kết thúc</h5>
+                                    <form>
+                                        <div class="input-group input-append date" id="endDay" data-date-format="dd-mm-yyyy">
+                                            <input type="text" placeholder=" " id="" name="endDay" v-model="EndDay"
+                                                   class="form-control">
+                                            <span class="input-group-addon add-on">
+                                                <i class="fa fa-calendar"></i>
+                                            </span>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div style="text-align:center;margin-top:46px;margin-bottom:46px;">
+                                <button class="btn btn-primary" v-on:click="SaveChange()">Đăng Ký</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <div class="col-xl-12">
+                    <div class="outer">
+                        <div class="inner bg-light lter bg-container cal_btn_hov">
+                            <div class="row">
+                                @*<div class="col-lg-3"></div>*@
+                                <div class="col-lg-12 media_max_991">
+                                    <div class="card">
+                                        <div class="card-block m-t-35">
+                                            <div id="calendar"></div>
+                                        </div>
+                                    </div>
+                                    <!-- /.box -->
+                                </div>
+                            </div>
+                            <br /> <br />
+                            <!-- Modal -->
+                            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="myModalLabel1">
+                                                <i class="fa fa-plus"></i>
+                                                Create Event
+                                            </h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="input-group">
+                                                <input type="text" id="new-event" class="form-control" placeholder="Event">
+                                                <div class="input-group-btn">
+                                                    <button type="button" class="color-chooser-btn btn btn-default text-white dropdown-toggle" data-toggle="dropdown">
+                                                        Default
+                                                    </button>
+                                                    <div class="dropdown-menu float-right cal_modal_type color-chooser">
+                                                        <a class="color_primary text-center text-white dropdown-item" href="#">
+                                                            Primary
+                                                        </a>
+                                                        <a class="color_success text-center text-white dropdown-item" href="#">
+                                                            Success
+                                                        </a>
+                                                        <a class="color_info text-center text-white dropdown-item" href="#">
+                                                            Info
+                                                        </a>
+                                                        <a class="color_warning text-center text-white dropdown-item" href="#">
+                                                            warning
+                                                        </a>
+                                                        <a class="color_danger text-center text-white dropdown-item" href="#">
+                                                            Danger
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <!-- /btn-group -->
+                                            </div>
+                                            <!-- /input-group -->
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger float-right" data-dismiss="modal">
+                                                Close
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-success pull-left" id="add-new-event" data-dismiss="modal">
+                                                <i class="fa fa-plus"></i>
+                                                Add
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.inner -->
+                    </div>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- END DATE PICKER -->
+        </div>
+        <!-- /.inner -->
+    </div>
+</div>
+<script type="text/javascript" src="~/Content/js/pluginjs/jasny-bootstrap.js"></script>
+<script type="text/javascript" src="~/Content/vendors/holderjs/js/holder.js"></script>
+<script type="text/javascript" src="~/Content/vendors/bootstrapvalidator/js/bootstrapValidator.min.js"></script>
+@*<script type="text/javascript" src="~/Content/js/pages/validation.js"></script>*@
+<script type="text/javascript" src="~/Content/vendors/moment/js/moment.min.js"></script>
+<script>
+    function formatDate(date) {
+        return moment(date).format("MM/DD/YYYY");
+    }
+</script>
+
+<script>
+    new Vue({
+        el: '#Monthly',
+        data: {
+            monthdata: {
+                BeginDay: null,
+                EndDay: null
+            },
+            StartDay: null,
+            EndDay: null
+        },
+        updated() {
+            var vueVM = this;
+            $(document).ready(function () {
+                $('#startDay').datepicker({
+                    format: 'mm/dd/yyyy',
+                    autoclose: true,
+                    todayHighlight: true,
+                }).on('changeDate', function (date) {
+                    var tmp = new Date(date.date);
+                    console.log(tmp.getMonth());
+                    if (new Date().getMonth() != tmp.getMonth() && new Date().getFullYear() != tmp.getFullYear()) {
+                        console.log(true);
+                        var month = new Date().getMonth();
+                        var year = new Date().getFullYear();
+                        date.date = new Date(year, month, 1);
+                        iziToast.error({
+                            title: 'Lỗi',
+                            message: 'Không được tháng hoặc nhỏ hơn tháng hoặc năm hiện tại',
+                            position: 'bottomLeft'
+                        });
+                    }
+                    date = date.format(0, "mm/dd/yyyy");
+                    vueVM.StartDay = date;
+                    $("#calendar").fullCalendar('destroy');
+                });
+
+            });
+
+            $(document).ready(function () {
+                $('#endDay').datepicker({
+                    format: 'mm/dd/yyyy',
+                    autoclose: true,
+                    todayHighlight: true,
+                }).on('changeDate', function (date) {
+                    if (new Date().getMonth() != date.getMonth() && new Date().getFullYear() != date.getFullYear()) {
+                        date = new Date();
+                        iziToast.error({
+                            title: 'Lỗi',
+                            message: 'Không được tháng hoặc nhỏ hơn tháng hoặc năm hiện tại',
+                            position: 'bottomLeft'
+                        });
+                    }
+                    date = date.format(0, "mm/dd/yyyy");
+                    vueVM.EndDay = date;
+                    $("#calendar").fullCalendar('destroy');
+                });
+
+            });
+
+            $('#calendar').fullCalendar({
+                displayEventTime: false,
+                lang: 'vi',
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month'
+                },
+                buttonText: {
+                    prev: "",
+                    next: "",
+                    today: 'today',
+                    month: 'Month',
+                    week: 'Week',
+                    day: 'Day'
+                },
+                //Random events
+                eventClick: function (calEvent, jsEvent, view) {
+                    evt_obj = calEvent;
+                    $("#event_title").val(evt_obj.title);
+                    currColor = evt_obj.backgroundColor;
+                    colorChooser.css({
+                        "background-color": evt_obj.backgroundColor,
+                        "border-color": evt_obj.backgroundColor
+                    }).html('type <span class="caret"></span>');
+                    $('#evt_modal').modal('show').on("shown.bs.modal", function () {
+                        $("#event_title").focus();
+                    }).on("hidden.bs.modal", function () {
+                        evt_obj = "";
+                    });
+                    $(".text_save").on("click", function () {
+                        evt_obj.title = $("#event_title").val();
+                        evt_obj.backgroundColor = currColor;
+                        $('#calendar').fullCalendar('updateEvent', evt_obj);
+                        setTimeout(setpopover, 100);
+                    });
+                },
+                events: [
+                    {
+                        title: 'Lịch Làm',
+                        start: vueVM.StartDay,
+                        end: moment(vueVM.EndDay).add(1, 'days')
+                    }
+                ],
+                selectable: true,
+                editable: true,
+                droppable: true,
+                drop: function (date, allDay) {
+
+                    // retrieve the dropped element's stored Event Object
+                    var originalEventObject = $(this).data('eventObject');
+
+                    // we need to copy it, so that multiple events don't have a reference to the same object
+                    var copiedEventObject = $.extend({}, originalEventObject);
+                    var $calendar_badge = $(".calendar_badge");
+                    // assign it the date that was reported
+                    copiedEventObject.start = date;
+                    copiedEventObject.allDay = allDay;
+                    copiedEventObject.backgroundColor = $(this).css("background-color");
+                    copiedEventObject.borderColor = $(this).css("border-color");
+
+                    $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+                    $calendar_badge.text(parseInt($calendar_badge.text()) + 1);
+                    // is the "remove after drop" checkbox checked?
+                    if ($('#drop-remove').is(':checked')) {
+                        $(this).remove();
+                    }
+                    setpopover();
+                },
+                eventDrop: function () {
+                    setTimeout(setpopover, 100);
+                },
+                eventResize: function () {
+                    setTimeout(setpopover, 100);
+                },
+                select: function (startDate, endDate) {
+                    //alert('selected ' + startDate.format() + ' to ' + endDate.format());
+                }
+
+            });
+
+        },
+        mounted() {
+            axios
+                .get(API_BASE_URL + '/WorkSchedule/getDataMonth')
+                .then(response => {
+                    //console.log("response.success = " + response.success);
+                    console.log(response.data.success);
+                    if (response.data.success) {
+                        this.monthdata = response.data.content;
+                        if (this.monthdata == null) {
+                            this.StartDay = formatDate(new Date());
+                            this.EndDay = formatDate(new Date());
+                        }
+                        else {
+                            this.StartDay = formatDate(this.monthdata.BeginDay);
+                            console.log("Begin = " + formatDate(this.monthdata.BeginDay));
+                            console.log("StartDay = " + this.StartDay);
+                            this.EndDay = formatDate(this.monthdata.EndDay);
+                            console.log("EndDay = " + this.EndDay);
+                        }
+
+
+                    }
+                    else {
+                        iziToast.error({
+                            title: 'Không thành công',
+                            message: response.data.content,
+                            position: 'bottomLeft'
+                        });
+                    }
+                })
+        },
+        methods: {
+            SaveChange: function () {
+                axios
+                    .post(API_BASE_URL + '/WorkSchedule/SaveMonthlySchedule', { "startday": this.StartDay, "endday": this.EndDay })
+                    .then(response => {
+                        if (response.data.success) {
+                            iziToast.success({
+                                title: 'Thành công',
+                                message: 'Thao tác thành công',
+                                position: 'bottomLeft'
+                            });
+                        }
+                        else {
+                            iziToast.error({
+                                title: 'Lỗi',
+                                message: response.data.content,
+                                position: 'bottomLeft'
+                            });
+                        }
+                    });
+
+            }
+        }
+    })
+</script>

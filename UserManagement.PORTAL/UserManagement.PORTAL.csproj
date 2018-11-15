@@ -169,6 +169,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\RollCallController.cs" />
+    <Compile Include="Controllers\WorkScheduleController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -178,6 +180,7 @@
     <Content Include="App\js\axios.min.js" />
     <Content Include="App\js\config.js" />
     <Content Include="App\js\polyfill.min.js" />
+    <Content Include="App\js\vee-validate.js" />
     <Content Include="App\js\vue-resource.min.js" />
     <Content Include="App\js\vue-router.js" />
     <Content Include="App\js\vue.js" />
@@ -780,6 +783,36 @@
     <Content Include="Content\js\pluginjs\jquery.sparkline.js" />
     <Content Include="Content\js\pluginjs\sample_data.js" />
     <Content Include="Content\js\tether.min.js" />
+    <Content Include="Content\LoginUI\css\main.css" />
+    <Content Include="Content\LoginUI\css\util.css" />
+    <Content Include="Content\LoginUI\fonts\font-awesome-4.7.0\css\font-awesome.css" />
+    <Content Include="Content\LoginUI\fonts\font-awesome-4.7.0\css\font-awesome.min.css" />
+    <Content Include="Content\LoginUI\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\LoginUI\fonts\font-awesome-4.7.0\HELP-US-OUT.txt" />
+    <Content Include="Content\LoginUI\fonts\montserrat\OFL.txt" />
+    <Content Include="Content\LoginUI\images\icons\favicon.ico" />
+    <Content Include="Content\LoginUI\images\img-01.png" />
+    <Content Include="Content\LoginUI\js\main.js" />
+    <Content Include="Content\LoginUI\vendor\animate\animate.css" />
+    <Content Include="Content\LoginUI\vendor\bootstrap\css\bootstrap-grid.css" />
+    <Content Include="Content\LoginUI\vendor\bootstrap\css\bootstrap-grid.min.css" />
+    <Content Include="Content\LoginUI\vendor\bootstrap\css\bootstrap-reboot.css" />
+    <Content Include="Content\LoginUI\vendor\bootstrap\css\bootstrap-reboot.min.css" />
+    <Content Include="Content\LoginUI\vendor\bootstrap\css\bootstrap.css" />
+    <Content Include="Content\LoginUI\vendor\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Content\LoginUI\vendor\bootstrap\js\bootstrap.js" />
+    <Content Include="Content\LoginUI\vendor\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Content\LoginUI\vendor\bootstrap\js\popper.js" />
+    <Content Include="Content\LoginUI\vendor\bootstrap\js\popper.min.js" />
+    <Content Include="Content\LoginUI\vendor\bootstrap\js\tooltip.js" />
+    <Content Include="Content\LoginUI\vendor\css-hamburgers\hamburgers.css" />
+    <Content Include="Content\LoginUI\vendor\css-hamburgers\hamburgers.min.css" />
+    <Content Include="Content\LoginUI\vendor\jquery\jquery-3.2.1.min.js" />
+    <Content Include="Content\LoginUI\vendor\select2\select2.css" />
+    <Content Include="Content\LoginUI\vendor\select2\select2.js" />
+    <Content Include="Content\LoginUI\vendor\select2\select2.min.css" />
+    <Content Include="Content\LoginUI\vendor\select2\select2.min.js" />
+    <Content Include="Content\LoginUI\vendor\tilt\tilt.jquery.min.js" />
     <Content Include="Content\src\css\pages\404.css" />
     <Content Include="Content\src\css\pages\advanced_charts.css" />
     <Content Include="Content\src\css\pages\advanced_components.css" />
@@ -1755,6 +1788,81 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="Content\LoginUI\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\LoginUI\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\LoginUI\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\LoginUI\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\LoginUI\fonts\font-awesome-4.7.0\fonts\FontAwesome.otf" />
+    <Content Include="Content\LoginUI\fonts\font-awesome-4.7.0\less\animated.less" />
+    <Content Include="Content\LoginUI\fonts\font-awesome-4.7.0\less\bordered-pulled.less" />
+    <Content Include="Content\LoginUI\fonts\font-awesome-4.7.0\less\core.less" />
+    <Content Include="Content\LoginUI\fonts\font-awesome-4.7.0\less\fixed-width.less" />
+    <Content Include="Content\LoginUI\fonts\font-awesome-4.7.0\less\font-awesome.less" />
+    <Content Include="Content\LoginUI\fonts\font-awesome-4.7.0\less\icons.less" />
+    <Content Include="Content\LoginUI\fonts\font-awesome-4.7.0\less\larger.less" />
+    <Content Include="Content\LoginUI\fonts\font-awesome-4.7.0\less\list.less" />
+    <Content Include="Content\LoginUI\fonts\font-awesome-4.7.0\less\mixins.less" />
+    <Content Include="Content\LoginUI\fonts\font-awesome-4.7.0\less\path.less" />
+    <Content Include="Content\LoginUI\fonts\font-awesome-4.7.0\less\rotated-flipped.less" />
+    <Content Include="Content\LoginUI\fonts\font-awesome-4.7.0\less\screen-reader.less" />
+    <Content Include="Content\LoginUI\fonts\font-awesome-4.7.0\less\stacked.less" />
+    <Content Include="Content\LoginUI\fonts\font-awesome-4.7.0\less\variables.less" />
+    <Content Include="Content\LoginUI\fonts\font-awesome-4.7.0\scss\font-awesome.scss" />
+    <Content Include="Content\LoginUI\fonts\font-awesome-4.7.0\scss\_animated.scss" />
+    <Content Include="Content\LoginUI\fonts\font-awesome-4.7.0\scss\_bordered-pulled.scss" />
+    <Content Include="Content\LoginUI\fonts\font-awesome-4.7.0\scss\_core.scss" />
+    <Content Include="Content\LoginUI\fonts\font-awesome-4.7.0\scss\_fixed-width.scss" />
+    <Content Include="Content\LoginUI\fonts\font-awesome-4.7.0\scss\_icons.scss" />
+    <Content Include="Content\LoginUI\fonts\font-awesome-4.7.0\scss\_larger.scss" />
+    <Content Include="Content\LoginUI\fonts\font-awesome-4.7.0\scss\_list.scss" />
+    <Content Include="Content\LoginUI\fonts\font-awesome-4.7.0\scss\_mixins.scss" />
+    <Content Include="Content\LoginUI\fonts\font-awesome-4.7.0\scss\_path.scss" />
+    <Content Include="Content\LoginUI\fonts\font-awesome-4.7.0\scss\_rotated-flipped.scss" />
+    <Content Include="Content\LoginUI\fonts\font-awesome-4.7.0\scss\_screen-reader.scss" />
+    <Content Include="Content\LoginUI\fonts\font-awesome-4.7.0\scss\_stacked.scss" />
+    <Content Include="Content\LoginUI\fonts\font-awesome-4.7.0\scss\_variables.scss" />
+    <Content Include="Content\LoginUI\fonts\montserrat\Montserrat-Black.ttf" />
+    <Content Include="Content\LoginUI\fonts\montserrat\Montserrat-BlackItalic.ttf" />
+    <Content Include="Content\LoginUI\fonts\montserrat\Montserrat-Bold.ttf" />
+    <Content Include="Content\LoginUI\fonts\montserrat\Montserrat-BoldItalic.ttf" />
+    <Content Include="Content\LoginUI\fonts\montserrat\Montserrat-ExtraBold.ttf" />
+    <Content Include="Content\LoginUI\fonts\montserrat\Montserrat-ExtraBoldItalic.ttf" />
+    <Content Include="Content\LoginUI\fonts\montserrat\Montserrat-ExtraLight.ttf" />
+    <Content Include="Content\LoginUI\fonts\montserrat\Montserrat-ExtraLightItalic.ttf" />
+    <Content Include="Content\LoginUI\fonts\montserrat\Montserrat-Italic.ttf" />
+    <Content Include="Content\LoginUI\fonts\montserrat\Montserrat-Light.ttf" />
+    <Content Include="Content\LoginUI\fonts\montserrat\Montserrat-LightItalic.ttf" />
+    <Content Include="Content\LoginUI\fonts\montserrat\Montserrat-Medium.ttf" />
+    <Content Include="Content\LoginUI\fonts\montserrat\Montserrat-MediumItalic.ttf" />
+    <Content Include="Content\LoginUI\fonts\montserrat\Montserrat-Regular.ttf" />
+    <Content Include="Content\LoginUI\fonts\montserrat\Montserrat-SemiBold.ttf" />
+    <Content Include="Content\LoginUI\fonts\montserrat\Montserrat-SemiBoldItalic.ttf" />
+    <Content Include="Content\LoginUI\fonts\montserrat\Montserrat-Thin.ttf" />
+    <Content Include="Content\LoginUI\fonts\montserrat\Montserrat-ThinItalic.ttf" />
+    <Content Include="Content\LoginUI\fonts\poppins\Poppins-Black.ttf" />
+    <Content Include="Content\LoginUI\fonts\poppins\Poppins-BlackItalic.ttf" />
+    <Content Include="Content\LoginUI\fonts\poppins\Poppins-Bold.ttf" />
+    <Content Include="Content\LoginUI\fonts\poppins\Poppins-BoldItalic.ttf" />
+    <Content Include="Content\LoginUI\fonts\poppins\Poppins-ExtraBold.ttf" />
+    <Content Include="Content\LoginUI\fonts\poppins\Poppins-ExtraBoldItalic.ttf" />
+    <Content Include="Content\LoginUI\fonts\poppins\Poppins-ExtraLight.ttf" />
+    <Content Include="Content\LoginUI\fonts\poppins\Poppins-ExtraLightItalic.ttf" />
+    <Content Include="Content\LoginUI\fonts\poppins\Poppins-Italic.ttf" />
+    <Content Include="Content\LoginUI\fonts\poppins\Poppins-Light.ttf" />
+    <Content Include="Content\LoginUI\fonts\poppins\Poppins-LightItalic.ttf" />
+    <Content Include="Content\LoginUI\fonts\poppins\Poppins-Medium.ttf" />
+    <Content Include="Content\LoginUI\fonts\poppins\Poppins-MediumItalic.ttf" />
+    <Content Include="Content\LoginUI\fonts\poppins\Poppins-Regular.ttf" />
+    <Content Include="Content\LoginUI\fonts\poppins\Poppins-SemiBold.ttf" />
+    <Content Include="Content\LoginUI\fonts\poppins\Poppins-SemiBoldItalic.ttf" />
+    <Content Include="Content\LoginUI\fonts\poppins\Poppins-Thin.ttf" />
+    <Content Include="Content\LoginUI\fonts\poppins\Poppins-ThinItalic.ttf" />
+    <Content Include="Content\LoginUI\vendor\bootstrap\css\bootstrap-grid.css.map" />
+    <Content Include="Content\LoginUI\vendor\bootstrap\css\bootstrap-grid.min.css.map" />
+    <Content Include="Content\LoginUI\vendor\bootstrap\css\bootstrap-reboot.css.map" />
+    <Content Include="Content\LoginUI\vendor\bootstrap\css\bootstrap-reboot.min.css.map" />
+    <Content Include="Content\LoginUI\vendor\bootstrap\css\bootstrap.css.map" />
+    <Content Include="Content\LoginUI\vendor\bootstrap\css\bootstrap.min.css.map" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -1778,7 +1886,9 @@
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Scripts\vue.js" />
     <Content Include="Scripts\vue.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -1802,6 +1912,9 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\WorkSchedule\Index.cshtml" />
+    <Content Include="Views\RollCall\Index.cshtml" />
+    <Content Include="Views\WorkSchedule\ShowCalender.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1816,6 +1929,10 @@
     <ProjectReference Include="..\UserManagement.LIBRARY\UserManagement.LIBRARY.csproj">
       <Project>{c7885a05-9d4e-4f43-9f7b-ab5d57cdc9c4}</Project>
       <Name>UserManagement.LIBRARY</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UserManagement.PERMISSON\UserManagement.PERMISSON.csproj">
+      <Project>{4BD64194-1B4E-4485-A208-DC530EB26114}</Project>
+      <Name>UserManagement.PERMISSON</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

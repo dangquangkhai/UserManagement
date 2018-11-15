@@ -1,0 +1,188 @@
+﻿
+@{
+    ViewBag.Title = "ShowCalender";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link type="text/css" rel="stylesheet" href="~/Content/vendors/fullcalendar/css/fullcalendar.min.css" />
+<link type="text/css" rel="stylesheet" href="~/Content/css/pages/calendar_custom.css" />
+<!--plugin script-->
+<script type="text/javascript" src="~/Content/vendors/moment/js/moment.min.js"></script>
+<script type="text/javascript" src="~/Content/vendors/fullcalendar/js/fullcalendar.min.js"></script>
+<script type="text/javascript" src="~/Content/js/pluginjs/calendarcustom.js"></script>
+<!-- end of plugin scripts -->
+<script type="text/javascript" src="~/Content/js/pages/calendar.js"></script>
+
+
+<div id="content" class="bg-container">
+    <header class="head">
+        <div class="main-bar">
+            <div class="row no-gutters">
+                <div class="col-sm-6">
+                    <h4 class="nav_top_align">
+                        <i class="fa fa-calendar"></i>
+                        Calendar
+                    </h4>
+                </div>
+                <div class="col-sm-6 col-12">
+                    <ol class="breadcrumb float-right  nav_breadcrumb_top_align">
+                        <li class="breadcrumb-item">
+                            <a href="index1.html">
+                                <i class="fa fa-home" data-pack="default" data-tags=""></i>
+                                Dashboard
+                            </a>
+                        </li>
+                        <li class="active breadcrumb-item">Calendar</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="outer">
+        <div class="inner bg-light lter bg-container cal_btn_hov">
+            <div class="row">
+                <div class="col-lg-3"></div>
+                <div class="col-lg-9 media_max_991">
+                    <div class="card">
+                        <div class="card-block m-t-35">
+                            <div id="calendar"></div>
+                        </div>
+                    </div>
+                    <!-- /.box -->
+                </div>
+            </div>
+            <br /> <br />
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel1">
+                                <i class="fa fa-plus"></i>
+                                Create Event
+                            </h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="input-group">
+                                <input type="text" id="new-event" class="form-control" placeholder="Event">
+                                <div class="input-group-btn">
+                                    <button type="button" class="color-chooser-btn btn btn-default text-white dropdown-toggle" data-toggle="dropdown">
+                                        Default
+                                    </button>
+                                    <div class="dropdown-menu float-right cal_modal_type color-chooser">
+                                        <a class="color_primary text-center text-white dropdown-item" href="#">
+                                            Primary
+                                        </a>
+                                        <a class="color_success text-center text-white dropdown-item" href="#">
+                                            Success
+                                        </a>
+                                        <a class="color_info text-center text-white dropdown-item" href="#">
+                                            Info
+                                        </a>
+                                        <a class="color_warning text-center text-white dropdown-item" href="#">
+                                            warning
+                                        </a>
+                                        <a class="color_danger text-center text-white dropdown-item" href="#">
+                                            Danger
+                                        </a>
+                                    </div>
+                                </div>
+                                <!-- /btn-group -->
+                            </div>
+                            <!-- /input-group -->
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger float-right" data-dismiss="modal">
+                                Close
+                                <i class="fa fa-times"></i>
+                            </button>
+                            <button type="button" class="btn btn-success pull-left" id="add-new-event" data-dismiss="modal">
+                                <i class="fa fa-plus"></i>
+                                Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.inner -->
+    </div>
+</div>
+
+<script>
+    $('#calendar').fullCalendar({
+        displayEventTime: false,
+        lang: 'vi',
+        header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,agendaWeek,agendaDay'
+        },
+        buttonText: {
+            prev: "",
+            next: "",
+            today: 'today',
+            month: 'Month',
+            week: 'Week',
+            day: 'Day'
+        },
+        //Random events
+        eventClick: function (calEvent, jsEvent, view) {
+            evt_obj = calEvent;
+            $("#event_title").val(evt_obj.title);
+            currColor = evt_obj.backgroundColor;
+            colorChooser.css({
+                "background-color": evt_obj.backgroundColor,
+                "border-color": evt_obj.backgroundColor
+            }).html('type <span class="caret"></span>');
+            $('#evt_modal').modal('show').on("shown.bs.modal", function () {
+                $("#event_title").focus();
+            }).on("hidden.bs.modal", function () {
+                evt_obj = "";
+            });
+            $(".text_save").on("click", function () {
+                evt_obj.title = $("#event_title").val();
+                evt_obj.backgroundColor = currColor;
+                $('#calendar').fullCalendar('updateEvent', evt_obj);
+                setTimeout(setpopover, 100);
+            });
+        },
+        selectable: true,
+        editable: true,
+        droppable: true,
+        drop: function (date, allDay) {
+
+            // retrieve the dropped element's stored Event Object
+            var originalEventObject = $(this).data('eventObject');
+
+            // we need to copy it, so that multiple events don't have a reference to the same object
+            var copiedEventObject = $.extend({}, originalEventObject);
+            var $calendar_badge = $(".calendar_badge");
+            // assign it the date that was reported
+            copiedEventObject.start = date;
+            copiedEventObject.allDay = allDay;
+            copiedEventObject.backgroundColor = $(this).css("background-color");
+            copiedEventObject.borderColor = $(this).css("border-color");
+
+            $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+            $calendar_badge.text(parseInt($calendar_badge.text()) + 1);
+            // is the "remove after drop" checkbox checked?
+            if ($('#drop-remove').is(':checked')) {
+                $(this).remove();
+            }
+            setpopover();
+        },
+        eventDrop: function () {
+            setTimeout(setpopover, 100);
+        },
+        eventResize: function () {
+            setTimeout(setpopover, 100);
+        },
+        select: function (startDate, endDate) {
+            alert('selected ' + startDate.format() + ' to ' + endDate.format());
+        }
+
+    });
+</script>
+

@@ -1,8 +1,201 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = null;
 }
 
-<h2>Index</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Admin Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="shortcut icon" href="~/Content/img/logo1.ico" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Content/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Content/LoginUI/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Content/LoginUI/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Content/LoginUI/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Content/LoginUI/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Content/LoginUI/css/util.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/LoginUI/css/main.css">
+    <!--===============================================================================================-->
 
+    <link type="text/css" rel="stylesheet" href="~/Content/vendors/izitoast/css/iziToast.min.css" />
+</head>
+<body>
+
+    <div class="limiter" id="login">
+        <div class="container-login100">
+            <div class="wrap-login100">
+                <div class="login100-pic js-tilt" data-tilt>
+                    <img src="~/Content/LoginUI/images/img-01.png" alt="IMG">
+                </div>
+
+                <div class="login100-form validate-form">
+                    <span class="login100-form-title">
+                        Đặng Nhập
+                    </span>
+
+                    <div class="wrap-input100 validate-input" data-validate="Nhập email hợp lệ: email@example.com">
+                        <input class="input100" type="text" v-model="Email" name="email" placeholder="Email">
+                        <span class="focus-input100"></span>
+                        <span class="symbol-input100">
+                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                        </span>
+                    </div>
+
+                    <div class="wrap-input100 validate-input" data-validate="Không được để trống mật khẩu">
+                        <input class="input100" type="password" v-model="Password" name="pass" placeholder="Mật Khẩu">
+                        <span class="focus-input100"></span>
+                        <span class="symbol-input100">
+                            <i class="fa fa-lock" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <div class="form-group has-danger" data-plugin="formMaterial">
+                        <p class="form-control-label" style="color:red;font-weight:bold" for="inputError"> {{ Error }} </p>
+                    </div>
+                    <div class="container-login100-form-btn">
+                        <button class="login100-form-btn" v-on:click="Login()">
+                            Đăng nhập
+                        </button>
+                    </div>
+
+                    <div class="text-center p-t-12">
+                        @*<span class="txt1">
+                                Forgot
+                            </span>
+                            <a class="txt2" href="#">
+                                Username / Password?
+                            </a>*@
+                    </div>
+
+                    <div class="text-center p-t-136">
+                        @*<a class="txt2" href="#">
+                                Create your Account
+                                <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+                            </a>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!--===============================================================================================-->
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/Content/LoginUI/vendor/bootstrap/js/popper.js"></script>
+    <script src="~/Content/LoginUI/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/Content/LoginUI/vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/Content/LoginUI/vendor/tilt/tilt.jquery.min.js"></script>
+    <script>
+        $('.js-tilt').tilt({
+            scale: 1.1
+        })
+    </script>
+    <!--===============================================================================================-->
+    <script src="~/Content/LoginUI/js/main.js"></script>
+
+    <!-- Plugin scripts -->
+    <script type="text/javascript" src="~/Content/vendors/izitoast/js/iziToast.min.js"></script>
+    <!--End of plugin scripts-->
+    <!--Page level scripts-->
+    <script type="text/javascript" src="~/Content/js/pages/izi_toastr.js"></script>
+    <!-- end of page level scripts-->
+    <!--end of plugin scripts-->
+    @*<script type="text/javascript" src="~/Content/js/pages/index.js"></script>*@
+    <!--Vuejs-->
+    <script src="~/App/js/vue.js"></script>
+    <script src="~/App/js/axios.min.js"></script>
+    <script src="~/App/js/config.js"></script>
+    <script src="~/App/js/vue-router.js"></script>
+    <script src="~/App/js/vue-resource.min.js"></script>
+    <script src="~/App/js/vee-validate.js"></script>
+
+    <script>
+        function isEmpty(text) {
+            if (text !== undefined && text !== null && text !== "") {
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+    </script>
+
+    <script>
+        var app = new Vue({
+            el: '#login',
+            data: {
+                Email: null,
+                Password: null,
+                Error: null,
+                RememberPass: false
+            },
+            methods: {
+                Login: function () {
+                    if (!isEmpty(this.Email) && !isEmpty(this.Password)) {
+                        axios
+                            .post(API_BASE_URL + '/Account/Login', { "Email": this.Email, "Password": this.Password })
+                            .then(response => {
+                                //console.log("response.success = " + response.success);
+                                console.log(response.data.success);
+                                if (response.data.success) {
+                                    this.Error = null;
+                                    var url = '@ViewBag.ReturnUrl';
+                                    if (url == undefined || url == "" || url == null)
+                                        window.open(API_BASE_URL, "_self");
+                                    else
+                                        window.open(url, "_self");
+
+
+                                }
+                                else {
+                                    this.Error = response.data.content;
+                                    iziToast.error({
+                                        title: 'Không thành công',
+                                        message: response.data.content,
+                                        position: 'bottomLeft'
+                                    });
+     ;
+                                }
+                            })
+                    }
+
+                    else {
+                        this.Error = null;
+                        //callToast("Không thành công", "Không được để trống Email hoặc Mật Khẩu", "error");
+                        ////var x = callAlert("Không thành công", "Không được để trống email hoặc mật khẩu", "error", "Đồng Ý", "Hủy");
+                        ////    x.then((result) => {
+                        ////        if (result.value) {
+                        ////            this.ShowFail();
+                        ////        }
+                        ////        else {
+                        ////        }
+                        ////
+                        iziToast.error({
+                            title: 'Không thành công',
+                            message: "Không được để trống Email hoặc Mật Khẩu",
+                            position: 'bottomLeft'
+                        });
+                    }
+
+                },
+                ShowFail: function () {
+                    alert("Hello World");
+                }
+            }
+        })
+    </script>
+</body>
+</html>

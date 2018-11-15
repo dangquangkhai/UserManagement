@@ -78,9 +78,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RDBMModels\Permission.cs" />
+    <Compile Include="RDBMModels\Monthly_Schedule.cs" />
+    <Compile Include="RDBMModels\PaymentPerDay.cs" />
     <Compile Include="RDBMModels\RDBMDBContext.cs" />
-    <Compile Include="RDBMModels\Role.cs" />
+    <Compile Include="RDBMModels\Roll_Call.cs" />
+    <Compile Include="RDBMModels\Salary.cs" />
     <Compile Include="RDBMModels\User.cs" />
     <Compile Include="RDBMProviders\RDBMBaseProvider.cs" />
     <Compile Include="RDBMProviders\SecureCipher.cs" />

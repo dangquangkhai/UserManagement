@@ -73,6 +73,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helper\RequestLogin.cs" />
     <Compile Include="Helper\RequestPermission.cs" />
     <Compile Include="Helper\SessionContext.cs" />
     <Compile Include="Helper\UserHelper.cs" />
