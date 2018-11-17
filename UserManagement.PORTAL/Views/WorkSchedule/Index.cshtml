@@ -6,7 +6,9 @@
 
 
 @* Date picker *@
-<link type="text/css" rel="stylesheet" href="~/Content/vendors/datepicker/css/bootstrap-datepicker.min.css" />
+<link type="text/css" rel="stylesheet" href="~/Content/css/custom.css"/>
+
+<link type="text/css" rel="stylesheet" href="~/Content/vendors/datepicker/css/bootstrap-datepicker3.css" />
 <script type="text/javascript" src="~/Content/vendors/datepicker/js/bootstrap-datepicker.min.js"></script>
 
 
@@ -18,9 +20,14 @@
 <script type="text/javascript" src="~/Content/js/pluginjs/calendarcustom.js"></script>
 <!-- end of plugin scripts -->
 @*<script type="text/javascript" src="~/Content/js/pages/calendar.js"></script>*@
+<link type="text/css" rel="stylesheet" href="~/Content/css/pages/colorpicker_hack.css" />
 
     
-
+<style>
+    table.table-condensed{
+        border-collapse:unset;
+    }
+</style>
 
 <div id="content" class="bg-container">
     <header class="head">
@@ -166,10 +173,12 @@
 <script type="text/javascript" src="~/Content/vendors/bootstrapvalidator/js/bootstrapValidator.min.js"></script>
 @*<script type="text/javascript" src="~/Content/js/pages/validation.js"></script>*@
 <script type="text/javascript" src="~/Content/vendors/moment/js/moment.min.js"></script>
+<script type="text/javascript" src="~/Scripts/bootbox.min.js"></script>
 <script>
     function formatDate(date) {
         return moment(date).format("MM/DD/YYYY");
     }
+
 </script>
 
 <script>
@@ -185,25 +194,29 @@
         },
         updated() {
             var vueVM = this;
+            var First_Day = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+            var Last_Day = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0);
             $(document).ready(function () {
                 $('#startDay').datepicker({
                     format: 'mm/dd/yyyy',
+                    startDate: First_Day,
+                    endDate: new Date(new Date().getFullYear(), new Date().getMonth(), 14),
                     autoclose: true,
                     todayHighlight: true,
                 }).on('changeDate', function (date) {
-                    var tmp = new Date(date.date);
-                    console.log(tmp.getMonth());
-                    if (new Date().getMonth() != tmp.getMonth() && new Date().getFullYear() != tmp.getFullYear()) {
-                        console.log(true);
-                        var month = new Date().getMonth();
-                        var year = new Date().getFullYear();
-                        date.date = new Date(year, month, 1);
-                        iziToast.error({
-                            title: 'Lỗi',
-                            message: 'Không được tháng hoặc nhỏ hơn tháng hoặc năm hiện tại',
-                            position: 'bottomLeft'
-                        });
-                    }
+                    //var tmp = new Date(date.date);
+                    //console.log(tmp.getMonth());
+                    //if (new Date().getMonth() != tmp.getMonth() && new Date().getFullYear() != tmp.getFullYear()) {
+                    //    console.log(true);
+                    //    var month = new Date().getMonth();
+                    //    var year = new Date().getFullYear();
+                    //    date.date = new Date(year, month, 1);
+                    //    iziToast.error({
+                    //        title: 'Lỗi',
+                    //        message: 'Không được tháng hoặc nhỏ hơn tháng hoặc năm hiện tại',
+                    //        position: 'bottomLeft'
+                    //    });
+                    //}
                     date = date.format(0, "mm/dd/yyyy");
                     vueVM.StartDay = date;
                     $("#calendar").fullCalendar('destroy');
@@ -214,17 +227,19 @@
             $(document).ready(function () {
                 $('#endDay').datepicker({
                     format: 'mm/dd/yyyy',
+                    startDate: new Date(new Date().getFullYear(), new Date().getMonth(), 15),
+                    endDate: Last_Day,
                     autoclose: true,
                     todayHighlight: true,
                 }).on('changeDate', function (date) {
-                    if (new Date().getMonth() != date.getMonth() && new Date().getFullYear() != date.getFullYear()) {
-                        date = new Date();
-                        iziToast.error({
-                            title: 'Lỗi',
-                            message: 'Không được tháng hoặc nhỏ hơn tháng hoặc năm hiện tại',
-                            position: 'bottomLeft'
-                        });
-                    }
+                    //if (new Date().getMonth() != date.getMonth() && new Date().getFullYear() != date.getFullYear()) {
+                    //    date = new Date();
+                    //    iziToast.error({
+                    //        title: 'Lỗi',
+                    //        message: 'Không được tháng hoặc nhỏ hơn tháng hoặc năm hiện tại',
+                    //        position: 'bottomLeft'
+                    //    });
+                    //}
                     date = date.format(0, "mm/dd/yyyy");
                     vueVM.EndDay = date;
                     $("#calendar").fullCalendar('destroy');
@@ -347,24 +362,49 @@
         },
         methods: {
             SaveChange: function () {
-                axios
-                    .post(API_BASE_URL + '/WorkSchedule/SaveMonthlySchedule', { "startday": this.StartDay, "endday": this.EndDay })
-                    .then(response => {
-                        if (response.data.success) {
-                            iziToast.success({
-                                title: 'Thành công',
-                                message: 'Thao tác thành công',
-                                position: 'bottomLeft'
-                            });
+                var jconfirm = function (message, callback) {
+                    var options = {
+                        message: message
+                    };
+                    options.buttons = {
+                        cancel: {
+                            label: "No",
+                            className: "btn-default",
+                            callback: function (result) {
+                                callback(false);
+                            }
+                        },
+                        main: {
+                            label: "Yes",
+                            className: "btn-primary",
+                            callback: function (result) {
+                                callback(true);
+                            }
                         }
-                        else {
-                            iziToast.error({
-                                title: 'Lỗi',
-                                message: response.data.content,
-                                position: 'bottomLeft'
-                            });
-                        }
-                    });
+                    };
+                    bootbox.dialog(options);
+                };
+
+
+                console.log("Data = " + jconfirm);
+                //axios
+                //    .post(API_BASE_URL + '/WorkSchedule/SaveMonthlySchedule', { "startday": this.StartDay, "endday": this.EndDay })
+                //    .then(response => {
+                //        if (response.data.success) {
+                //            iziToast.success({
+                //                title: 'Thành công',
+                //                message: 'Thao tác thành công',
+                //                position: 'bottomLeft'
+                //            });
+                //        }
+                //        else {
+                //            iziToast.error({
+                //                title: 'Lỗi',
+                //                message: response.data.content,
+                //                position: 'bottomLeft'
+                //            });
+                //        }
+                //    });
 
             }
         }

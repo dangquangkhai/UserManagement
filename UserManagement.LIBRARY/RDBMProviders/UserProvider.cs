@@ -7,10 +7,10 @@ using UserManagement.LIBRARY.RDBMModels;
 
 namespace UserManagement.LIBRARY.RDBMProviders
 {
-    public class UserProvider: RDBMBaseProvider
+    public class UserProvider : RDBMBaseProvider
     {
         String defaultPassWord = "Iloveopsr1998";
-        public User[] getAllUser()  
+        public User[] getAllUser()
         {
             return base.db.Users.ToArray();
         }
@@ -42,7 +42,7 @@ namespace UserManagement.LIBRARY.RDBMProviders
             {
                 return base.db.Users.Where(u => u.ID == ID).FirstOrDefault();
             }
-            catch(Exception )
+            catch (Exception)
             {
                 return null;
             }
@@ -54,7 +54,7 @@ namespace UserManagement.LIBRARY.RDBMProviders
             {
                 User edit = base.db.Users.Where(u => u.ID == ID).FirstOrDefault();
 
-                edit.Email = (user.Email != null || user.Email != "")?(user.Email):(edit.Email);
+                edit.Email = (user.Email != null || user.Email != "") ? (user.Email) : (edit.Email);
                 //if(user.Password == null || user.Password == "")
                 //{
                 //    edit.Password = edit.Password;
@@ -95,10 +95,11 @@ namespace UserManagement.LIBRARY.RDBMProviders
             {
                 Roll_Call check = base.db.Roll_Call.Where(c => c.UserID == ID).FirstOrDefault();
                 Monthly_Schedule set = base.db.Monthly_Schedule.Where(m => m.UserID == ID).FirstOrDefault();
-                if(set != null)
+                if (set != null)
                 {
                     if (check == null)
                     {
+                        check = new Roll_Call();
                         check.Count = true;
                         check.UserID = ID;
                         check.Created = DateTime.Today;
@@ -111,7 +112,7 @@ namespace UserManagement.LIBRARY.RDBMProviders
                         check.Created = DateTime.Today;
                         base.db.SaveChanges();
                     }
-                    set.TotalCount = (set.TotalCount != null)?(set.TotalCount + 1):(1);
+                    set.TotalCount = (set.TotalCount != null) ? (set.TotalCount + 1) : (1);
                     base.db.SaveChanges();
                     return "true";
                 }
@@ -135,24 +136,89 @@ namespace UserManagement.LIBRARY.RDBMProviders
 
         public bool saveMonthlySchedule(int ID, DateTime startday, DateTime endday)
         {
-            Monthly_Schedule selct = base.db.Monthly_Schedule.Where(u => u.UserID == ID).FirstOrDefault();
-            if(selct == null)
+            Monthly_Schedule select = base.db.Monthly_Schedule.Where(u => u.UserID == ID).FirstOrDefault();
+            if (select == null)
             {
-                selct = new Monthly_Schedule();
-                selct.BeginDay = startday;
-                selct.EndDay = endday;
-                selct.UserID = ID;
-                base.db.Monthly_Schedule.Add(selct);
+                select = new Monthly_Schedule();
+                select.BeginDay = startday;
+                select.EndDay = endday;
+                select.UserID = ID;
+                base.db.Monthly_Schedule.Add(select);
                 base.db.SaveChanges();
             }
             else
             {
-                selct.BeginDay = startday;
-                selct.EndDay = endday;
+                select.BeginDay = startday;
+                select.EndDay = endday;
                 base.db.SaveChanges();
             }
 
             return true;
+        }
+
+        public bool isMonthlyScheduleSet(int ID)
+        {
+            try
+            {
+                Monthly_Schedule select = base.db.Monthly_Schedule.Where(u => u.UserID == ID).FirstOrDefault();
+                if (select != null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+        }
+        public Salary getSalaryOfUserByID(int ID)
+        {
+            try
+            {
+                Monthly_Schedule select = base.db.Monthly_Schedule.Where(u => u.UserID == ID).FirstOrDefault();
+                PaymentPerDay paymentOfDay = base.db.PaymentPerDays.Where(u => u.UserID == ID).FirstOrDefault();
+                Double salary = 0;
+                if(select != null)
+                {
+                    if(paymentOfDay == null)
+                    {
+                        paymentOfDay = base.db.PaymentPerDays.Where(u => u.UserID == null).FirstOrDefault();
+                    }
+                    salary = Convert.ToInt32(select.TotalCount) * Convert.ToDouble(paymentOfDay.Money);
+                    Salary UserSalary = base.db.Salaries.Where(u => u.UserID == ID).FirstOrDefault();
+                    if(UserSalary != null)
+                    {
+                        UserSalary.Payment = Convert.ToDecimal(salary);
+                        base.db.SaveChanges();
+                        return UserSalary;
+                    }
+                    else
+                    {
+                        UserSalary = new Salary();
+                        UserSalary.MonthID = select.ID;
+                        UserSalary.UserID = ID;
+                        UserSalary.Payment = Convert.ToDecimal(salary);
+                        UserSalary.PayMentOfUserID = paymentOfDay.ID;
+                        base.db.Salaries.Add(UserSalary);
+                        base.db.SaveChanges();
+                        return UserSalary;
+                    }
+                }
+                else
+                {
+                    return null;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
     }
 }

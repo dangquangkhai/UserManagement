@@ -168,8 +168,10 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RollCallController.cs" />
+    <Compile Include="Controllers\SalaryController.cs" />
     <Compile Include="Controllers\WorkScheduleController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1766,6 +1768,7 @@
     <Content Include="Content\vendors\tinymce\js\skins\lightgray\fonts\tinymce.eot" />
     <Content Include="Content\vendors\tinymce\js\skins\lightgray\fonts\tinymce.ttf" />
     <Content Include="Content\vendors\tinymce\js\skins\lightgray\fonts\tinymce.woff" />
+    <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -1915,6 +1918,9 @@
     <Content Include="Views\WorkSchedule\Index.cshtml" />
     <Content Include="Views\RollCall\Index.cshtml" />
     <Content Include="Views\WorkSchedule\ShowCalender.cshtml" />
+    <Content Include="Views\Error\Forbiden.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Salary\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
