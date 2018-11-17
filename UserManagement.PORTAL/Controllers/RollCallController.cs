@@ -34,6 +34,21 @@ namespace UserManagement.PORTAL.Controllers
             }
         }
 
+        [HttpGet]
+        public JsonResult IsCount()
+        {
+            try
+            {
+                int ID = SessionContext.CurrentUser().ID;
+                bool check = _provider.isCount(ID);
+                return Json(new { success = check, content = (check) ? ("Hôm nay bạn đã điểm danh") : ("") }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, content = ex.Message.ToString() }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         [HttpPost]
         public JsonResult Count()
         {

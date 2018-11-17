@@ -80,8 +80,22 @@
                 .then(response => {
                     console.log(response.data.success);
                     if (response.data.success) {
-                        this.Error = null;
-                        this.isSet = true;
+                        //this.Error = null;
+                        //this.isSet = true;
+                        axios
+                            .get(API_BASE_URL + '/RollCall/IsCount')
+                            .then(response => {
+                                if (response.data.success) {
+                                    this.Error = response.data.content;
+                                    this.isSet = false;
+
+                                }
+                                else {
+                                    this.Error = null;
+                                    this.isSet = true;
+                                }
+                            })
+
                     }
                     else {
                         this.Error = response.data.content;
@@ -104,7 +118,6 @@
                             });
                         }
                         else {
-                            this.Error = response.data.content;
                             iziToast.error({
                                 title: 'Không thành công',
                                 message: 'Điểm thanh không thành công',

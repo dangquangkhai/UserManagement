@@ -29,15 +29,23 @@ namespace UserManagement.PERMISSON.Provider
         }
         public User GetByEmailAndPassword(string email, string password)
         {
-            User user =  base.db.Users.Where(u => u.Email == email).FirstOrDefault();
-            if (new SecureCipher().Decrypt(user.Password) == password)
-            {
-                return user;
-            }
-            else
+            User user = base.db.Users.Where(u => u.Email == email).FirstOrDefault();
+            if (user == null)
             {
                 return null;
             }
+            else
+            {
+                if (new SecureCipher().Decrypt(user.Password) == password)
+                {
+                    return user;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+
         }
 
 

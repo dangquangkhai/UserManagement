@@ -95,6 +95,7 @@ namespace UserManagement.LIBRARY.RDBMProviders
             {
                 Roll_Call check = base.db.Roll_Call.Where(c => c.UserID == ID).FirstOrDefault();
                 Monthly_Schedule set = base.db.Monthly_Schedule.Where(m => m.UserID == ID).FirstOrDefault();
+                String output = null;
                 if (set != null)
                 {
                     if (check == null)
@@ -108,17 +109,30 @@ namespace UserManagement.LIBRARY.RDBMProviders
                     }
                     else
                     {
-                        check.Count = true;
-                        check.Created = DateTime.Today;
-                        base.db.SaveChanges();
+                        if (DateTime.Compare(Convert.ToDateTime(check.Created.ToString()), DateTime.Today) == 0)
+                        {
+                            output = "AlreadyCount";
+                        }
+                        else
+                        {
+                            check.Count = true;
+                            check.Created = DateTime.Today;
+                            base.db.SaveChanges();
+                        }
+
                     }
-                    set.TotalCount = (set.TotalCount != null) ? (set.TotalCount + 1) : (1);
-                    base.db.SaveChanges();
-                    return "true";
+                    if(output != "AlreadyCount")
+                    {
+                        set.TotalCount = (set.TotalCount != null) ? (set.TotalCount + 1) : (1);
+                        base.db.SaveChanges();
+                        return "true";
+                    }
+
+                    return output;
                 }
                 else
                 {
-                    return "MonthlyScheduleNotSet";
+                        return "MonthlyScheduleNotSet";
                 }
 
             }
@@ -176,6 +190,27 @@ namespace UserManagement.LIBRARY.RDBMProviders
             }
 
         }
+
+        public bool isCount(int ID)
+        {
+            try
+            {
+                Roll_Call select = base.db.Roll_Call.Where(u => u.UserID == ID).FirstOrDefault();
+                if (select != null)
+                {
+                    return (DateTime.Compare(Convert.ToDateTime(select.Created.ToString()), DateTime.Today) == 0) ? (true) : (false);
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
         public Salary getSalaryOfUserByID(int ID)
         {
             try
@@ -183,15 +218,15 @@ namespace UserManagement.LIBRARY.RDBMProviders
                 Monthly_Schedule select = base.db.Monthly_Schedule.Where(u => u.UserID == ID).FirstOrDefault();
                 PaymentPerDay paymentOfDay = base.db.PaymentPerDays.Where(u => u.UserID == ID).FirstOrDefault();
                 Double salary = 0;
-                if(select != null)
+                if (select != null)
                 {
-                    if(paymentOfDay == null)
+                    if (paymentOfDay == null)
                     {
                         paymentOfDay = base.db.PaymentPerDays.Where(u => u.UserID == null).FirstOrDefault();
                     }
                     salary = Convert.ToInt32(select.TotalCount) * Convert.ToDouble(paymentOfDay.Money);
                     Salary UserSalary = base.db.Salaries.Where(u => u.UserID == ID).FirstOrDefault();
-                    if(UserSalary != null)
+                    if (UserSalary != null)
                     {
                         UserSalary.Payment = Convert.ToDecimal(salary);
                         base.db.SaveChanges();

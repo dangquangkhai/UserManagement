@@ -362,49 +362,49 @@
         },
         methods: {
             SaveChange: function () {
-                var jconfirm = function (message, callback) {
-                    var options = {
-                        message: message
-                    };
-                    options.buttons = {
-                        cancel: {
-                            label: "No",
-                            className: "btn-default",
-                            callback: function (result) {
-                                callback(false);
-                            }
-                        },
-                        main: {
-                            label: "Yes",
-                            className: "btn-primary",
-                            callback: function (result) {
-                                callback(true);
-                            }
+                //var jconfirm = function (message, callback) {
+                //    var options = {
+                //        message: message
+                //    };
+                //    options.buttons = {
+                //        cancel: {
+                //            label: "No",
+                //            className: "btn-default",
+                //            callback: function (result) {
+                //                callback(false);
+                //            }
+                //        },
+                //        main: {
+                //            label: "Yes",
+                //            className: "btn-primary",
+                //            callback: function (result) {
+                //                callback(true);
+                //            }
+                //        }
+                //    };
+                //    bootbox.dialog(options);
+                //};
+
+
+                //console.log("Data = " + jconfirm);
+                axios
+                    .post(API_BASE_URL + '/WorkSchedule/SaveMonthlySchedule', { "startday": this.StartDay, "endday": this.EndDay })
+                    .then(response => {
+                        if (response.data.success) {
+                            iziToast.success({
+                                title: 'Thành công',
+                                message: 'Thao tác thành công',
+                                position: 'bottomLeft'
+                            });
                         }
-                    };
-                    bootbox.dialog(options);
-                };
-
-
-                console.log("Data = " + jconfirm);
-                //axios
-                //    .post(API_BASE_URL + '/WorkSchedule/SaveMonthlySchedule', { "startday": this.StartDay, "endday": this.EndDay })
-                //    .then(response => {
-                //        if (response.data.success) {
-                //            iziToast.success({
-                //                title: 'Thành công',
-                //                message: 'Thao tác thành công',
-                //                position: 'bottomLeft'
-                //            });
-                //        }
-                //        else {
-                //            iziToast.error({
-                //                title: 'Lỗi',
-                //                message: response.data.content,
-                //                position: 'bottomLeft'
-                //            });
-                //        }
-                //    });
+                        else {
+                            iziToast.error({
+                                title: 'Lỗi',
+                                message: response.data.content,
+                                position: 'bottomLeft'
+                            });
+                        }
+                    });
 
             }
         }

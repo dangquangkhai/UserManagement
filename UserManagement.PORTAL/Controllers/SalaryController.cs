@@ -26,21 +26,32 @@ namespace UserManagement.PORTAL.Controllers
             {
                 int ID = SessionContext.CurrentUser().ID;
                 Salary userSalary = _provider.getSalaryOfUserByID(ID);
-                Object data = new {
+                Object data = new
+                {
                     userSalary.ID,
                     userSalary.UserID,
                     userSalary.MonthID,
                     userSalary.Payment,
                     userSalary.PayMentOfUserID,
-                    FullName = userSalary.User.Firstname + " " + userSalary.User.Lastname
-
+                    FullName = userSalary.User.Firstname + " " + userSalary.User.Lastname,
+                    TotalMonthDay = DateTime.DaysInMonth(new DateTime().Year, new DateTime().Month),
+                    userSalary.Monthly_Schedule.TotalCount
                 };
+                var tmp = data;
+                if (data == null)
+                {
+                    throw new Exception("Xảy ra lỗi");
+                }
+                return Json(new { success = true, content = data }, JsonRequestBehavior.AllowGet);
 
-                return Json(new { success = true, content = data },JsonRequestBehavior.AllowGet);
-
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
-                return Json(new { success = false, content = ex.Message.ToString() }, JsonRequestBehavior.AllowGet);
+                return Json(new
+                {
+                    success = false,
+                    content = ex.Message.ToString()
+                }, JsonRequestBehavior.AllowGet);
 
             }
         }

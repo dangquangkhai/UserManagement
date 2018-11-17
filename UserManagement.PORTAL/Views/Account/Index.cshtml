@@ -6,11 +6,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Admin Login</title>
+    <title>Portal Login</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
-    <link rel="shortcut icon" href="~/Content/img/logo1.ico" />
+    <link rel="shortcut icon" href="~/Content/img/logo-blue.png" />
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="~/Content/bootstrap.min.css">
     <!--===============================================================================================-->
@@ -43,7 +43,7 @@
                     </span>
 
                     <div class="wrap-input100 validate-input" data-validate="Nhập email hợp lệ: email@example.com">
-                        <input class="input100" type="text" v-model="Email" name="email" placeholder="Email">
+                        <input class="input100" type="text" autocomplete="off" v-on:keyup.enter="Login()" v-model="Email" name="email" placeholder="Email">
                         <span class="focus-input100"></span>
                         <span class="symbol-input100">
                             <i class="fa fa-envelope" aria-hidden="true"></i>
@@ -51,7 +51,7 @@
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate="Không được để trống mật khẩu">
-                        <input class="input100" type="password" v-model="Password" name="pass" placeholder="Mật Khẩu">
+                        <input class="input100" type="password" autocomplete="off" v-on:keyup.enter="Login()" v-model="Password" name="pass" placeholder="Mật Khẩu">
                         <span class="focus-input100"></span>
                         <span class="symbol-input100">
                             <i class="fa fa-lock" aria-hidden="true"></i>
@@ -142,6 +142,28 @@
                 Error: null,
                 RememberPass: false
             },
+            watch: {
+                Email: function () {
+                    if (!isEmpty(this.Email)) {
+                        this.Error = null;
+                    }
+                },
+                Password: function () {
+                    if (!isEmpty(this.Password)) {
+                        this.Error = null;
+                    }
+                }
+            },
+            updated() {
+                $('.js-tilt').tilt({
+                    scale: 1.1
+                })
+            },
+            mounted() {
+                $('.js-tilt').tilt({
+                    scale: 1.1
+                })
+            },
             methods: {
                 Login: function () {
                     if (!isEmpty(this.Email) && !isEmpty(this.Password)) {
@@ -173,7 +195,7 @@
                     }
 
                     else {
-                        this.Error = null;
+                        this.Error = "Không được để trống Email hoặc Mật Khẩu";
                         //callToast("Không thành công", "Không được để trống Email hoặc Mật Khẩu", "error");
                         ////var x = callAlert("Không thành công", "Không được để trống email hoặc mật khẩu", "error", "Đồng Ý", "Hủy");
                         ////    x.then((result) => {
