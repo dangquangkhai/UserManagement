@@ -68,6 +68,8 @@ namespace UserManagement.TEST.PERMISSION
         {
             List<Role> listRole = _provider.getAllRole();
             List<Role> role = new List<Role>();
+            listRole[0].Checked = true;
+            listRole[1].Checked = true;
             role.Add(listRole[0]);
             role.Add(listRole[1]);
             Assert.AreEqual(_provider.updatePGroupRole(4, role.ToArray()), true);
@@ -79,6 +81,8 @@ namespace UserManagement.TEST.PERMISSION
         {
             List<User> listUser = _provider.getAllUser();
             List<User> user = new List<User>();
+            listUser[0].Checked = true;
+            listUser[1].Checked = true;
             user.Add(listUser[0]);
             user.Add(listUser[1]);
             Assert.AreEqual(_provider.updatePGroupUser(4, user.ToArray()), true);

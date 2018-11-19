@@ -44,7 +44,7 @@ namespace UserManagement.TEST.PERMISSION
             editRole.Name = "SYSTEMBODYNIGGA";
             editRole.Descriptions = "Test Role EDIT";
             editRole.Modified = DateTime.Now;
-            Assert.AreEqual(_provider.editRole(5,editRole),true);
+            Assert.AreEqual(_provider.editRole(5, editRole), true);
         }
 
         [TestMethod]
@@ -65,6 +65,8 @@ namespace UserManagement.TEST.PERMISSION
         {
             List<Permission> listPermission = _provider.getAllPermission();
             List<Permission> permission = new List<Permission>();
+            listPermission[0].Checked = true;
+            listPermission[1].Checked = true;
             permission.Add(listPermission[0]);
             permission.Add(listPermission[1]);
             Assert.AreEqual(_provider.updatePRolePermission(2, permission.ToArray()), true);
