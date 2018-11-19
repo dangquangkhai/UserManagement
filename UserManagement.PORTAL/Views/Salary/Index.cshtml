@@ -80,7 +80,7 @@
                     console.log("Daa = " + response.data.content);
                     if (response.data.success) {
                         this.UserSalary = response.data.content;
-                        this.processbar = "width:" + this.UserSalary.TotalCount +"%"
+                        this.processbar = "width:" + this.UserSalary.TotalCount * 100 / this.UserSalary.TotalMonthDay +"%"
                     }
                     else {
                         iziToast.error({
