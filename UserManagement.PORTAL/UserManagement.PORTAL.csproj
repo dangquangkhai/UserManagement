@@ -815,6 +815,8 @@
     <Content Include="Content\LoginUI\vendor\select2\select2.min.css" />
     <Content Include="Content\LoginUI\vendor\select2\select2.min.js" />
     <Content Include="Content\LoginUI\vendor\tilt\tilt.jquery.min.js" />
+    <Content Include="Content\Page500\css\style.css" />
+    <Content Include="Content\Page500\js\index.js" />
     <Content Include="Content\src\css\pages\404.css" />
     <Content Include="Content\src\css\pages\advanced_charts.css" />
     <Content Include="Content\src\css\pages\advanced_components.css" />
@@ -1879,6 +1881,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
     <Content Include="Scripts\popper-utils.js" />
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
@@ -1902,9 +1905,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
@@ -1917,10 +1917,11 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\WorkSchedule\Index.cshtml" />
     <Content Include="Views\RollCall\Index.cshtml" />
-    <Content Include="Views\WorkSchedule\ShowCalender.cshtml" />
     <Content Include="Views\Error\Forbiden.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Salary\Index.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Error\Internal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

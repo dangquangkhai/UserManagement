@@ -28,10 +28,6 @@ namespace UserManagement.PERMISSON.Helper
 
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
-            //bAllowAccess = true;
-            //base.OnAuthorization(filterContext);
-            //return;
-            //string Email = HttpContext.Current.User.Identity.Name;
             try
             {
                 RDBMDBContext db = new RDBMDBContext();
@@ -47,24 +43,13 @@ namespace UserManagement.PERMISSON.Helper
                 }
                 else
                 {
-                    //List<string> lstPermission = _provider.getAllPermission();
-                    //if (lstPermission.Where(e => e == sPermission).Count() == 0)
-                    //{
-                    //    AuthorizationContext UnAuthContext = new AuthorizationContext();
-                    //    bAllowAccess = false;
-                    //    base.HandleUnauthorizedRequest(UnAuthContext);
-                    //}
-                    //else
-                    //{
-                    //    bAllowAccess = true;
-                    //}
                     AllowAccess = true;
                 }
             }
             catch (Exception ex)
             {
                 filterContext.Result = new RedirectToRouteResult(new
-                RouteValueDictionary(new { controller = "Error", action = "Forbiden" }));
+                RouteValueDictionary(new { controller = "Error", action = "Internal" }));
             }
             base.OnAuthorization(filterContext);
         }

@@ -20,9 +20,17 @@ namespace UserManagement.LIBRARY.RDBMProviders
         {
             try
             {
-                base.db.Users.Add(user);
-                base.db.SaveChanges();
-                return "true";
+                User check = base.db.Users.Where(u => u.Email == user.Email).FirstOrDefault();
+                if (check == null)
+                {
+                    base.db.Users.Add(user);
+                    base.db.SaveChanges();
+                    return "true";
+                }
+                else
+                {
+                    return "false";
+                }
             }
             catch (Exception ex)
             {
@@ -121,7 +129,7 @@ namespace UserManagement.LIBRARY.RDBMProviders
                         }
 
                     }
-                    if(output != "AlreadyCount")
+                    if (output != "AlreadyCount")
                     {
                         set.TotalCount = (set.TotalCount != null) ? (set.TotalCount + 1) : (1);
                         base.db.SaveChanges();
@@ -132,7 +140,7 @@ namespace UserManagement.LIBRARY.RDBMProviders
                 }
                 else
                 {
-                        return "MonthlyScheduleNotSet";
+                    return "MonthlyScheduleNotSet";
                 }
 
             }
@@ -151,23 +159,31 @@ namespace UserManagement.LIBRARY.RDBMProviders
         public bool saveMonthlySchedule(int ID, DateTime startday, DateTime endday)
         {
             Monthly_Schedule select = base.db.Monthly_Schedule.Where(u => u.UserID == ID).FirstOrDefault();
-            if (select == null)
+            if(getUserById(ID) != null)
             {
-                select = new Monthly_Schedule();
-                select.BeginDay = startday;
-                select.EndDay = endday;
-                select.UserID = ID;
-                base.db.Monthly_Schedule.Add(select);
-                base.db.SaveChanges();
+                if (select == null)
+                {
+                    select = new Monthly_Schedule();
+                    select.BeginDay = startday;
+                    select.EndDay = endday;
+                    select.UserID = ID;
+                    base.db.Monthly_Schedule.Add(select);
+                    base.db.SaveChanges();
+                }
+                else
+                {
+                    select.BeginDay = startday;
+                    select.EndDay = endday;
+                    base.db.SaveChanges();
+                }
+
+                return true;
             }
             else
             {
-                select.BeginDay = startday;
-                select.EndDay = endday;
-                base.db.SaveChanges();
+                return false;
             }
 
-            return true;
         }
 
         public bool isMonthlyScheduleSet(int ID)
@@ -253,6 +269,19 @@ namespace UserManagement.LIBRARY.RDBMProviders
             catch (Exception ex)
             {
                 return null;
+            }
+        }
+
+        public PaymentPerDay getPaymentOfUserById(int ID)
+        {
+            PaymentPerDay payment = base.db.PaymentPerDays.Where(u => u.UserID == ID).FirstOrDefault();
+            if (payment == null)
+            {
+                return base.db.PaymentPerDays.Where(u => u.UserID == null).FirstOrDefault();
+            }
+            else
+            {
+                return payment;
             }
         }
     }

@@ -18,5 +18,11 @@ namespace UserManagement.PORTAL.Controllers
         {
             return View();
         }
+
+        public ActionResult Internal()
+        {
+            return View();
+        }
+
     }
 }

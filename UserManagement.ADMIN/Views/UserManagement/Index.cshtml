@@ -65,15 +65,10 @@
                                     <td>{{ item.Position }}</td>
                                     <td class="center">{{ item.Address }}</td>
                                     <td style="text-align:center;">
-                                        <a href="view_user.html" data-toggle="tooltip" data-placement="top" title="View User">
-                                            <i class="fa fa-eye text-success"></i>
-                                        </a>&nbsp; &nbsp;
+                                        &nbsp; &nbsp;
                                         <a class="edit" data-toggle="tooltip" data-placement="top" title="Edit" @*href="edit_user.html"*@ v-on:click="EditUser(item.ID)">
                                             <i class="fa fa-pencil text-warning"></i>
                                         </a>&nbsp; &nbsp;
-                                        <a class="delete hidden-xs hidden-sm" data-toggle="tooltip" data-placement="top" title="Delete" href="delete_user.html">
-                                            <i class="fa fa-trash text-danger"></i>
-                                        </a>
                                     </td>
                                 </tr>
                             </tbody>

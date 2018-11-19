@@ -122,7 +122,7 @@ namespace UserManagement.ADMIN.Controllers
             {
                 var data = _provider.getUserById(ID);
                 data.Password = null;
-                return Json(new { success = true, content = data }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = true, content = ReflectionHelper.ModelToObject(data) }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {

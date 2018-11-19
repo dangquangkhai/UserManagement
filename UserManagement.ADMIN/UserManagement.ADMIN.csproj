@@ -824,6 +824,8 @@
     <Content Include="Content\LoginUI\vendor\select2\select2.min.css" />
     <Content Include="Content\LoginUI\vendor\select2\select2.min.js" />
     <Content Include="Content\LoginUI\vendor\tilt\tilt.jquery.min.js" />
+    <Content Include="Content\Page500\css\style.css" />
+    <Content Include="Content\Page500\js\index.js" />
     <Content Include="Content\src\css\pages\404.css" />
     <Content Include="Content\src\css\pages\advanced_charts.css" />
     <Content Include="Content\src\css\pages\advanced_components.css" />
@@ -1930,6 +1932,7 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Error\Internal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

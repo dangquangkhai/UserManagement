@@ -18,5 +18,10 @@ namespace UserManagement.ADMIN.Controllers
         {
             return View();
         }
+
+        public ActionResult Internal()
+        {
+            return View();
+        }
     }
 }
