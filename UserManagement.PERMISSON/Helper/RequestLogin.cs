@@ -30,11 +30,6 @@ namespace UserManagement.PERMISSON.Helper
         {
             try
             {
-                RDBMDBContext db = new RDBMDBContext();
-                if (!db.Database.Exists())
-                {
-                    throw new Exception("Lost connection");
-                }
                 if (!HttpContext.Current.User.Identity.IsAuthenticated)
                 {
                     filterContext.Result = new RedirectToRouteResult(new
@@ -56,10 +51,17 @@ namespace UserManagement.PERMISSON.Helper
 
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
-            filterContext.Result = new RedirectToRouteResult(new
-            RouteValueDictionary(new { controller = "Error", action = "Forbiden" }));
-
-
+            RDBMDBContext db = new RDBMDBContext();
+            if (!db.Database.Exists())
+            {
+                filterContext.Result = new RedirectToRouteResult(new
+                RouteValueDictionary(new { controller = "Error", action = "Internal" }));
+            }
+            else
+            {
+                filterContext.Result = new RedirectToRouteResult(new
+                RouteValueDictionary(new { controller = "Error", action = "Forbiden" }));
+            }
         }
 
     }
