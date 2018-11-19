@@ -105,6 +105,22 @@ namespace UserManagement.PERMISSON.Provider
             }
         }
 
+        public bool deleteRole(String name)
+        {
+            try
+            {
+                Role delete = base.db.Roles.Where(g => g.Name == name).FirstOrDefault();
+                base.db.Roles.Attach(delete);
+                base.db.Roles.Remove(delete);
+                base.db.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         public List<Permission> getAllPermission()
         {
             try
@@ -119,19 +135,27 @@ namespace UserManagement.PERMISSON.Provider
 
         public Permission[] GetAllPermissionsOfRoleByID(int ID)
         {
-            List<Permission> retList = new List<Permission>();
-            var query = (from Rol in db.Role_Permissions
-                         join Per in db.Permissions on Rol.PermissionID equals Per.ID
-                         where Rol.RoleID == ID
-                         select new { Name = Per.Name, ID = Per.ID });
-            foreach (var item in query)
+            if(getRoleById(ID) != null)
             {
-                Permission pitem = new Permission();
-                pitem.ID = item.ID;
-                pitem.Name = item.Name;
-                retList.Add(pitem);
+                List<Permission> retList = new List<Permission>();
+                var query = (from Rol in db.Role_Permissions
+                             join Per in db.Permissions on Rol.PermissionID equals Per.ID
+                             where Rol.RoleID == ID
+                             select new { Name = Per.Name, ID = Per.ID });
+                foreach (var item in query)
+                {
+                    Permission pitem = new Permission();
+                    pitem.ID = item.ID;
+                    pitem.Name = item.Name;
+                    retList.Add(pitem);
+                }
+                return retList.ToArray();
             }
-            return retList.ToArray();
+
+            else
+            {
+                return null;
+            }
 
         }
 
@@ -139,43 +163,50 @@ namespace UserManagement.PERMISSON.Provider
         {
             try
             {
-                List<Role_Permissions> select = base.db.Role_Permissions.Where(g => g.RoleID == ID).ToList();
-                if (select.Count <= 0)
+                if(getRoleById(ID) != null)
                 {
-                    foreach (Permission item in PermissionList)
+                    List<Role_Permissions> select = base.db.Role_Permissions.Where(g => g.RoleID == ID).ToList();
+                    if (select.Count <= 0)
                     {
-                        Role_Permissions addItem = new Role_Permissions();
-                        if (item.Checked == true)
+                        foreach (Permission item in PermissionList)
                         {
-                            addItem.RoleID = ID;
-                            addItem.PermissionID = item.ID;
-                            select.Add(addItem);
+                            Role_Permissions addItem = new Role_Permissions();
+                            if (item.Checked == true)
+                            {
+                                addItem.RoleID = ID;
+                                addItem.PermissionID = item.ID;
+                                select.Add(addItem);
+                            }
                         }
+                        base.db.Role_Permissions.AddRange(select);
+                        base.db.SaveChanges();
                     }
-                    base.db.Role_Permissions.AddRange(select);
-                    base.db.SaveChanges();
+                    else
+                    {
+                        foreach (Permission item in PermissionList)
+                        {
+                            Role_Permissions addItem = new Role_Permissions();
+                            if (item.Checked == false && select.Where(g => g.PermissionID == item.ID).Count() == 1)
+                            {
+                                base.db.Role_Permissions.Remove(select.Where(g => g.PermissionID == item.ID).FirstOrDefault());
+                            }
+
+                            if (item.Checked == true && select.Where(g => g.PermissionID == item.ID).Count() == 0)
+                            {
+                                addItem.RoleID = ID;
+                                addItem.PermissionID = item.ID;
+                                base.db.Role_Permissions.Add(addItem);
+                            }
+                        }
+                        base.db.SaveChanges();
+                    }
+
+                    return true;
                 }
                 else
                 {
-                    foreach (Permission item in PermissionList)
-                    {
-                        Role_Permissions addItem = new Role_Permissions();
-                        if (item.Checked == false && select.Where(g => g.PermissionID == item.ID).Count() == 1)
-                        {
-                            base.db.Role_Permissions.Remove(select.Where(g => g.PermissionID == item.ID).FirstOrDefault());
-                        }
-
-                        if (item.Checked == true && select.Where(g => g.PermissionID == item.ID).Count() == 0)
-                        {
-                            addItem.RoleID = ID;
-                            addItem.PermissionID = item.ID;
-                            base.db.Role_Permissions.Add(addItem);
-                        }
-                    }
-                    base.db.SaveChanges();
+                    return false;
                 }
-
-                return true;
             }
             catch (Exception)
             {

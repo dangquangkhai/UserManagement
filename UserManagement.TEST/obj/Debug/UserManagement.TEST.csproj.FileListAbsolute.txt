@@ -23,3 +23,17 @@ D:\Projects\UserManagement\UserManagement.TEST\bin\Debug\EntityFramework.SqlServ
 D:\Projects\UserManagement\UserManagement.TEST\bin\Debug\System.Data.SqlServerCe.dll
 D:\Projects\UserManagement\UserManagement.TEST\bin\Debug\EntityFramework.SqlServer.xml
 D:\Projects\UserManagement\UserManagement.TEST\bin\Debug\EntityFramework.SqlServerCompact.xml
+D:\Projects\UserManagement\UserManagement.TEST\bin\Debug\UserManagement.PERMISSON.dll
+D:\Projects\UserManagement\UserManagement.TEST\bin\Debug\System.Web.Mvc.dll
+D:\Projects\UserManagement\UserManagement.TEST\bin\Debug\System.Web.WebPages.dll
+D:\Projects\UserManagement\UserManagement.TEST\bin\Debug\System.Web.WebPages.Razor.dll
+D:\Projects\UserManagement\UserManagement.TEST\bin\Debug\System.Web.Razor.dll
+D:\Projects\UserManagement\UserManagement.TEST\bin\Debug\Microsoft.Web.Infrastructure.dll
+D:\Projects\UserManagement\UserManagement.TEST\bin\Debug\System.Web.WebPages.Deployment.dll
+D:\Projects\UserManagement\UserManagement.TEST\bin\Debug\UserManagement.PERMISSON.pdb
+D:\Projects\UserManagement\UserManagement.TEST\bin\Debug\UserManagement.PERMISSON.dll.config
+D:\Projects\UserManagement\UserManagement.TEST\bin\Debug\System.Web.Mvc.xml
+D:\Projects\UserManagement\UserManagement.TEST\bin\Debug\System.Web.WebPages.xml
+D:\Projects\UserManagement\UserManagement.TEST\bin\Debug\System.Web.WebPages.Razor.xml
+D:\Projects\UserManagement\UserManagement.TEST\bin\Debug\System.Web.Razor.xml
+D:\Projects\UserManagement\UserManagement.TEST\bin\Debug\System.Web.WebPages.Deployment.xml

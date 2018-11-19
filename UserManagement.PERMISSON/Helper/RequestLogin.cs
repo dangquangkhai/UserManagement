@@ -46,7 +46,7 @@ namespace UserManagement.PERMISSON.Helper
                     AllowAccess = true;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 filterContext.Result = new RedirectToRouteResult(new
                 RouteValueDictionary(new { controller = "Error", action = "Internal" }));

@@ -108,6 +108,24 @@ namespace UserManagement.PERMISSON.Provider
             }
         }
 
+        public bool deleteGroup(String Name)
+        {
+            try
+            {
+                Group delete = base.db.Groups.Where(g => g.Name == Name).FirstOrDefault();
+                base.db.Groups.Attach(delete);
+                base.db.Groups.Remove(delete);
+                base.db.SaveChanges();
+                return true;
+
+
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         public List<Role> getAllRole()
         {
             return base.db.Roles.ToList();
@@ -120,38 +138,52 @@ namespace UserManagement.PERMISSON.Provider
 
         public Role[] GetAllRoleOfGroupByID(int ID)
         {
-            List<Role> retList = new List<Role>();
-            var query = (from Group in db.Group_Roles
-                         join Rol in db.Roles on Group.RoleID equals Rol.ID
-                         where Group.GroupID == ID
-                         select new { Name = Rol.Name, ID = Rol.ID });
-            foreach (var item in query)
+            if (getGroupById(ID) != null)
             {
-                Role pitem = new Role();
-                pitem.ID = item.ID;
-                pitem.Name = item.Name;
-                retList.Add(pitem);
+                List<Role> retList = new List<Role>();
+                var query = (from Group in db.Group_Roles
+                             join Rol in db.Roles on Group.RoleID equals Rol.ID
+                             where Group.GroupID == ID
+                             select new { Name = Rol.Name, ID = Rol.ID });
+                foreach (var item in query)
+                {
+                    Role pitem = new Role();
+                    pitem.ID = item.ID;
+                    pitem.Name = item.Name;
+                    retList.Add(pitem);
+                }
+                return retList.ToArray();
             }
-            return retList.ToArray();
+            else
+            {
+                return null;
+            }
 
         }
 
         public User[] GetAllUserOfGroupByID(int ID)
         {
-            List<User> retList = new List<User>();
-            var query = (from Group in db.Group_Users
-                         join user in db.Users on Group.UserID equals user.ID
-                         where Group.GroupID == ID
-                         select new { F_Name = user.Firstname, L_Name = user.Lastname, U_ID = user.ID });
-            foreach (var item in query)
+            if (getGroupById(ID) != null)
             {
-                User pitem = new User();
-                pitem.ID = item.U_ID;
-                pitem.Firstname = item.F_Name;
-                pitem.Lastname = item.L_Name;
-                retList.Add(pitem);
+                List<User> retList = new List<User>();
+                var query = (from Group in db.Group_Users
+                             join user in db.Users on Group.UserID equals user.ID
+                             where Group.GroupID == ID
+                             select new { F_Name = user.Firstname, L_Name = user.Lastname, U_ID = user.ID });
+                foreach (var item in query)
+                {
+                    User pitem = new User();
+                    pitem.ID = item.U_ID;
+                    pitem.Firstname = item.F_Name;
+                    pitem.Lastname = item.L_Name;
+                    retList.Add(pitem);
+                }
+                return retList.ToArray();
             }
-            return retList.ToArray();
+            else
+            {
+                return null;
+            }
 
         }
 
@@ -159,43 +191,50 @@ namespace UserManagement.PERMISSON.Provider
         {
             try
             {
-                List<Group_Roles> select = base.db.Group_Roles.Where(g => g.GroupID == ID).ToList();
-                if(select.Count <= 0)
+                if (getGroupById(ID) != null)
                 {
-                    foreach(Role item in RoleList)
+                    List<Group_Roles> select = base.db.Group_Roles.Where(g => g.GroupID == ID).ToList();
+                    if (select.Count <= 0)
                     {
-                        Group_Roles addItem = new Group_Roles();
-                        if(item.Checked == true)
+                        foreach (Role item in RoleList)
                         {
-                            addItem.GroupID = ID;
-                            addItem.RoleID = item.ID;
-                            select.Add(addItem);
+                            Group_Roles addItem = new Group_Roles();
+                            if (item.Checked == true)
+                            {
+                                addItem.GroupID = ID;
+                                addItem.RoleID = item.ID;
+                                select.Add(addItem);
+                            }
                         }
+                        base.db.Group_Roles.AddRange(select);
+                        base.db.SaveChanges();
                     }
-                    base.db.Group_Roles.AddRange(select);
-                    base.db.SaveChanges();
+                    else
+                    {
+                        foreach (Role item in RoleList)
+                        {
+                            Group_Roles addItem = new Group_Roles();
+                            if (item.Checked == false && select.Where(g => g.RoleID == item.ID).Count() == 1)
+                            {
+                                base.db.Group_Roles.Remove(select.Where(g => g.RoleID == item.ID).FirstOrDefault());
+                            }
+
+                            if (item.Checked == true && select.Where(g => g.RoleID == item.ID).Count() == 0)
+                            {
+                                addItem.GroupID = ID;
+                                addItem.RoleID = item.ID;
+                                base.db.Group_Roles.Add(addItem);
+                            }
+                        }
+                        base.db.SaveChanges();
+                    }
+
+                    return true;
                 }
                 else
                 {
-                    foreach(Role item in RoleList)
-                    {
-                        Group_Roles addItem = new Group_Roles();
-                        if (item.Checked == false && select.Where(g => g.RoleID == item.ID).Count() == 1)
-                        {
-                            base.db.Group_Roles.Remove(select.Where(g => g.RoleID == item.ID).FirstOrDefault());
-                        }
-
-                        if(item.Checked == true && select.Where(g => g.RoleID == item.ID).Count() == 0)
-                        {
-                            addItem.GroupID = ID;
-                            addItem.RoleID = item.ID;
-                            base.db.Group_Roles.Add(addItem);
-                        }
-                    }
-                    base.db.SaveChanges();
+                    return false;
                 }
-
-                return true;
             }
             catch (Exception)
             {
@@ -207,43 +246,50 @@ namespace UserManagement.PERMISSON.Provider
         {
             try
             {
-                List<Group_Users> select = base.db.Group_Users.Where(g => g.GroupID == ID).ToList();
-                if (select.Count <= 0)
+                if (getGroupById(ID) != null)
                 {
-                    foreach (User item in UserList)
+                    List<Group_Users> select = base.db.Group_Users.Where(g => g.GroupID == ID).ToList();
+                    if (select.Count <= 0)
                     {
-                        Group_Users addItem = new Group_Users();
-                        if (item.Checked == true)
+                        foreach (User item in UserList)
                         {
-                            addItem.GroupID = ID;
-                            addItem.UserID = item.ID;
-                            select.Add(addItem);
+                            Group_Users addItem = new Group_Users();
+                            if (item.Checked == true)
+                            {
+                                addItem.GroupID = ID;
+                                addItem.UserID = item.ID;
+                                select.Add(addItem);
+                            }
                         }
+                        base.db.Group_Users.AddRange(select);
+                        base.db.SaveChanges();
                     }
-                    base.db.Group_Users.AddRange(select);
-                    base.db.SaveChanges();
+                    else
+                    {
+                        foreach (User item in UserList)
+                        {
+                            Group_Users addItem = new Group_Users();
+                            if (item.Checked == false && select.Where(g => g.UserID == item.ID).Count() == 1)
+                            {
+                                base.db.Group_Users.Remove(select.Where(g => g.UserID == item.ID).FirstOrDefault());
+                            }
+
+                            if (item.Checked == true && select.Where(g => g.UserID == item.ID).Count() == 0)
+                            {
+                                addItem.GroupID = ID;
+                                addItem.UserID = item.ID;
+                                base.db.Group_Users.Add(addItem);
+                            }
+                        }
+                        base.db.SaveChanges();
+                    }
+
+                    return true;
                 }
                 else
                 {
-                    foreach (User item in UserList)
-                    {
-                        Group_Users addItem = new Group_Users();
-                        if (item.Checked == false && select.Where(g => g.UserID == item.ID).Count() == 1)
-                        {
-                            base.db.Group_Users.Remove(select.Where(g => g.UserID == item.ID).FirstOrDefault());
-                        }
-
-                        if (item.Checked == true && select.Where(g => g.UserID == item.ID).Count() == 0)
-                        {
-                            addItem.GroupID = ID;
-                            addItem.UserID = item.ID;
-                            base.db.Group_Users.Add(addItem);
-                        }
-                    }
-                    base.db.SaveChanges();
+                    return false;
                 }
-
-                return true;
             }
             catch (Exception)
             {

@@ -63,6 +63,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LIBRARY\TestUserLib.cs" />
+    <Compile Include="PERMISSION\TestGroupPermission.cs" />
+    <Compile Include="PERMISSION\TestLogin.cs" />
     <Compile Include="PERMISSION\TestRolePermission.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -74,6 +76,10 @@
     <ProjectReference Include="..\UserManagement.LIBRARY\UserManagement.LIBRARY.csproj">
       <Project>{c7885a05-9d4e-4f43-9f7b-ab5d57cdc9c4}</Project>
       <Name>UserManagement.LIBRARY</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UserManagement.PERMISSON\UserManagement.PERMISSON.csproj">
+      <Project>{4bd64194-1b4e-4485-a208-dc530eb26114}</Project>
+      <Name>UserManagement.PERMISSON</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
