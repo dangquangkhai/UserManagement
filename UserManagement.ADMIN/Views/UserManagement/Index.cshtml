@@ -109,7 +109,7 @@
     }
 </script>
 <script>
-    new Vue({
+    var UserManagementApp = new Vue({
         el: '#DataTableApp',
         data: {
             UserList: []
@@ -143,6 +143,7 @@
                 }); // initialize select2 dropdown
                 $("#editable_table_wrapper .dt-buttons .btn").addClass('btn-secondary').removeClass('btn-default');
                 $(".dataTables_wrapper").removeClass("form-inline");
+                $('#editable_table').dataTable.ext.errMode = 'none';
             });
         },
         mounted() {
@@ -164,8 +165,26 @@
             },
             EditUser: function (ID) {
                 window.open(API_BASE_URL + "/UserManagement/EditUser?Id=" + ID, '_blank');
+            },
+            ReloadData: function () {
+                axios
+                    .get(API_BASE_URL + '/UserManagement/GetUser')
+                    .then(response => {
+                        if (response.data.success) {
+                            this.UserList = response.data.content;
+                            for (var i = 0; i < this.UserList.length; i++) {
+                                this.UserList[i].Birthday = formatDate(this.UserList[i].Birthday);
+                            }
+                        }
+                    });
             }
         }
 
-    })
+    });
+</script>
+
+<script>
+    function reloadData() {
+        UserManagementApp.ReloadData();
+    }
 </script>
