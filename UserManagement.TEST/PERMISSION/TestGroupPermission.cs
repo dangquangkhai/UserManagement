@@ -30,7 +30,7 @@ namespace UserManagement.TEST.PERMISSION
             newGroup.Name = "TEST";
             newGroup.Descriptions = "Group Test for Test Case";
             newGroup.Created = DateTime.Now;
-            Assert.AreEqual(_provider.createGroup(newGroup), true);
+            Assert.AreEqual(_provider.createGroup(newGroup), false);
         }
 
         [TestMethod]
