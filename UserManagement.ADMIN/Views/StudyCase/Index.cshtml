@@ -1,0 +1,117 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link  rel="stylesheet" href="~/Content/bootstrap.min.css"/>
+    <script type="text/javascript" src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/App/js/config.js"></script>
+    <title>Index</title>
+</head>
+<body>
+    <div class="row" style="margin-left:12px;margin-top:12px;">
+        <div class="col-md-12">
+
+            <input type="text" id="txtValue" />
+
+        </div>
+        <div class="col-md-12" style="padding-top:5px;">
+
+            <button id="btnEnter">Nhấn</button>
+
+        </div>
+    </div>
+    <div>
+        <div class="row" style="margin-left:12px;margin-top:12px;">
+            <div class="col-md-12" style="padding-top:5px;">
+                <button id="btnGetData">Nhấn để láy dữ liệu bằng Ajax</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="margin-left:12px;margin-top:12px;">
+        <div class="col-md-12">
+            <input type="text" id="txtValuePost" />
+        </div>
+        <div class="col-md-12" style="padding-top:5px;">
+            <button id="btnPostData">Post dữ liệu lên server</button>
+
+        </div>
+    </div>
+
+
+</body>
+</html>
+
+<script>
+    $(document).ready(function () {
+
+        $("#btnEnter").click(function () {
+
+            var value = $("#txtValue").val();
+
+            alert("Bạn vừa nhập:  " + value);
+
+        });
+    });
+    $(document).ready(function () {
+
+        $("#btnGetData").click(function () {
+            $.ajax({
+                url: API_BASE_URL + '/StudyCase/GetData',
+                success: function (response) {
+                    if (response.success) {
+                        var data = response.content;
+                        alert("ID: " +data.ID +
+                            "\nFullName: "+data.FullName +
+                            "\nAddress: "+ data.Address +
+                            "\nAge: " + data.Age +
+                            "\nPhone: " + data.Phone )
+
+                    }
+                }, error: function (content) {
+                    alert("Error Get Data");
+                }
+            });
+
+        });
+    });
+
+    $(document).ready(function () {
+
+        $("#btnPostData").click(function () {
+
+            var number = $("#txtValuePost").val();
+            if (isNaN(number)) {
+                return alert("Bạn nhập không phải số");
+            }
+            else {
+                $.ajax({
+                    type: 'POST',
+                    url: API_BASE_URL + "/StudyCase/EditID",
+                    data: {
+                        "ID": number
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            var data = response.content;
+                            alert("ID: " + data.ID +
+                                "\nFullName: " + data.FullName);
+                        }
+                        else {
+                            alert("Error");
+                        }
+                    }
+                });
+            }
+
+        });
+    });
+
+</script>

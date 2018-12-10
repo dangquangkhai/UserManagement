@@ -23,6 +23,7 @@ namespace UserManagement.LIBRARY.RDBMProviders
                 User check = base.db.Users.Where(u => u.Email == user.Email).FirstOrDefault();
                 if (check == null)
                 {
+                    user.Password = new SecureCipher().Encrypt(user.Password);
                     base.db.Users.Add(user);
                     base.db.SaveChanges();
                     return "true";
